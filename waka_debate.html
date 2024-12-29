@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+  ディベート: {{ debate.topic }}
+{% endblock %}
+
+{% block content %}
+<div class="debate-container">
+  <div class="debate-header">
+    <h3>ディベート画面</h3>
+
+    <div class="interrupt-button">
+        <!-- 中断ボタン -->
+        <form action="{{ url_for('interrupt_debate', debate_id=debate.id) }}" method="post" id="interrupt-form">
+          <button type="submit" onclick="return confirm('ディベートを中断しますか？')">中断</button>
+        </form>
+      </div>
+    
+    <div class="time-theme">
+      <p><strong>残り時間:</strong> {{ debate.time }} </p>
+      <p><strong>テーマ:</strong> {{ debate.topic }}</p>
+    </div>
+  </div>
+
+  <div class="debate-dialog">
+    <div class="chat-box">
+      <!-- 司会とAIの発言 -->
+      <div class="chat-entry moderator">
+        <span class="speaker">司会:</span>
+        <p>{{ debate.moderator_message }}</p>
+      </div>
+      <div class="chat-entry ai">
+        <span class="speaker">AI:</span>
+        <p>{{ debate.ai_message }}</p>
+      </div>
+
+      <!-- ユーザーの発言 -->
+      <div class="chat-entry user">
+        <span class="speaker">ユーザー:</span>
+        <p>{{ debate.user_message }}</p>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
