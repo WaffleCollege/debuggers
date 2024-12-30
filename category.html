@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lamg = "ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- モバイルデバイス対応 -->
+    <title>ディベートモード選択</title> 
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+
+
+</head>
+<body>
+        <!-- ボタン　 -->
+    <form action="/debate_page" method="post"><!--ボタンを押したらデータベースに保存される-->
+      {% for category in categories %}
+        <button type="submit" name="category" value="{{ category }}">{{ category }}</button>
+      {% endfor %}
+      <!--自由記述　これだけ、押したら自由記述画面にいく-->
+      <button type="button" id="free-description-button">自由記述</button>
+      <textarea id="free-description" name="free_text"></textarea>
+    </form>
+          
+    <script>
+       // 自由記述ボタンを取得
+      const freeDescriptionButton = document.getElementById('free-description-button');
+      // 自由記述エリアを取得
+      const freeDescriptionArea = document.getElementById('free-description');
+          
+      // 自由記述ボタンがクリックされたときの処理
+      freeDescriptionButton.addEventListener('click', () => {
+        // フォームを送信
+        const form = freeDescriptionButton.closest('form');
+        form.submit();
+           });
+    </script>
+    </form>
+    
+    
+
+    </body>
+
+
+</html>

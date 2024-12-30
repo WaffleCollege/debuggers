@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- モバイルデバイス対応 -->
+  <title>ディベートアプリ（仮）</title> 
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<div>
+  <h1>ディベートモード選択</h1>
+</div>
+  <!-- ボタン　３つ -->
+  <form action="/category_page" method ="post" novalidate="novalidate"><!--ボタンを押したら次の画面に遷移-->
+    {% for mode in modes %}
+      <button type="submit" name="mode" value="{{ mode }}">{{ mode }}</button>
+    {% endfor %}
+  </form>
+
+  <form action="/category_page" method ="post" novalidate="novalidate"><!--ボタンを押したら次の画面に遷移-->
+    {% for mode in modes %}
+      <button type="submit" name="mode" value="{{ mode }}">{{ mode }}</button>
+    {% endfor %}
+  </form>
+
+
+
+</body>
+</html>
+    
