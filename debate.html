@@ -1,47 +1,52 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="ja">
 
-{% block header %}
-  ディベート: {{ debate.topic }}
-{% endblock %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- モバイルデバイス対応 -->
+  <title>ディベートアプリ（仮）</title> <!-- 後で変えましょう！ -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="debate.css"> <!-- 追加した -->
+  <script src="script.js" defer></script>
+  <script src="debate.js" defer></script> <!-- 追加した -->
+</head>
+<body>
+    <header>
+        <p class="debate-header">ディベート画面</p>
+        <div class="interrupt-button">
+            <!-- 中断ボタン -->
+            <form action="{{ url_for('interrupt_debate', debate_id=debate.id) }}" method="post" id="interrupt-form">
+                <button class="interrupt" type="submit" onclick="return confirm('ディベートを中断しますか？')">中断</button>
+            </form>
+        </div>
+    </header>
+    <main>
+        <div class="time-theme">
+            <p class="time">残り時間:<br>{{ debate.time }}</p>
+            <p class="theme">テーマ: {{ debate.topic }}</p>
+        </div>
+        <div class="debate-dialog">
+            <div class="chat-box">
+            <!-- 司会とAIの発言 -->
+            <div class="chat-entry-moderator">
+                <p class="speaker">司会:</p>
+                <p>{{ debate.moderator_message }}</p>
+            </div>
+            <div class="chat-entry-ai">
+                <p class="speaker">AI:</p>
+                <p>{{ debate.ai_message }}</p>
+            </div>
+        
+            <!-- ユーザーの発言 -->
+            <div class="chat-entry-user">
+                <p class="speaker">ユーザー:</p>
+                <p>{{ debate.user_message }}</p>
+                <input type="text" id="debate.user_message" name="debate.user_message" placeholder="ここに入力してください">
+            </div>
+            </div>
+        </div>
+    </main>
+</body>
 
-{% block content %}
-<div class="debate-container">
-  <div class="debate-header">
-    <h3>ディベート画面</h3>
+</html>
 
-    <div class="interrupt-button">
-        <!-- 中断ボタン -->
-        <form action="{{ url_for('interrupt_debate', debate_id=debate.id) }}" method="post" id="interrupt-form">
-          <button type="submit" onclick="return confirm('ディベートを中断しますか？')">中断</button>
-        </form>
-      </div>
-    
-    <div class="time-theme">
-      <p><strong>残り時間:</strong> {{ debate.time }} </p>
-      <p><strong>テーマ:</strong> {{ debate.topic }}</p>
-    </div>
-  </div>
-
-  <div class="debate-dialog">
-    <div class="chat-box">
-      <!-- 司会とAIの発言 -->
-      <div class="chat-entry moderator">
-        <span class="speaker">司会:</span>
-        <p>{{ debate.moderator_message }}</p>
-      </div>
-      <div class="chat-entry ai">
-        <span class="speaker">AI:</span>
-        <p>{{ debate.ai_message }}</p>
-      </div>
-
-      <!-- ユーザーの発言 -->
-      <div class="chat-entry user">
-        <span class="speaker">ユーザー:</span>
-        <p>{{ debate.user_message }}</p>
-      </div>
-    </div>
-  </div>
-
-
-</div>
-{% endblock %}
