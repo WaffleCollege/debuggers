@@ -1,45 +1,74 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for
 from extensions import db
-import openai
+from models import AllDebate
 
-debate_bp = Blueprint('debate', __name__)
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
 
-openai.api_key = "your_openai_api_key"
+debate_bp = Blueprint('debate', __name__, url_prefix='/debate')
 
-debate_data = {
-    "id": 1,
-    "topic": "環境問題について",
-    "time": "03:00",
-    "moderator_message": "これからディベートを開始します。",
-    "ai_message": "私は反対の立場です。",
-    "user_message": ""
-}
-
+if OPENAI_AVAILABLE:
+    openai.api_key = None
 
 def generate_ai_response(prompt):
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=300,
-        temperature=0.7,
-    )
-    return response.choices[0].text.strip()
+    if not OPENAI_AVAILABLE or not openai.api_key:
+        return "AI応答を生成できませんでした。"
+    try:
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt=prompt,
+            max_tokens=300,
+            temperature=0.7,
+        )
+        return response.choices[0].text.strip()
+    except Exception:
+        return "AI応答を生成できませんでした。"
+
+import json
 
 @debate_bp.route('/debate', methods=['GET', 'POST'])
 def debate():
+    debate = AllDebate.query.first()
+    if not debate:
+        return "ディベートデータが存在しません", 404
+
     if request.method == 'POST':
-        user_message = request.form.get('debate.user_message')
+        user_message = request.form.get('user_message')
         if user_message:
-            debate_data["user_message"] = user_message
-            prompt = f"テーマ: {debate_data['topic']}\nユーザーの意見: {user_message}\nAIの反論:"
-            debate_data["ai_message"] = generate_ai_response(prompt)
+            try:
+                feedback_list = json.loads(debate.feedback) if debate.feedback else []
+            except json.JSONDecodeError:
+                feedback_list = []
 
-    return render_template('debate.html', debate=debate_data)
+            feedback_list.append({"speaker": "ユーザー", "message": user_message})
 
-@debate_bp.route('/interrupt_debate/<int:debate_id>', methods=['POST'])
+            feedback_list.append({"speaker": "司会", "message": "次はAIの応答です。"})
+
+            ai_response = generate_ai_response(user_message)
+            feedback_list.append({"speaker": "AI", "message": ai_response})
+
+            debate.feedback = json.dumps(feedback_list)
+            db.session.commit()
+
+    try:
+        feedback_list = json.loads(debate.feedback) if debate.feedback else []
+    except json.JSONDecodeError:
+        feedback_list = []
+
+    if len(feedback_list) == 0:
+        feedback_list.append({"speaker": "司会", "message": f"これから、テーマ「{debate.category}」についてディベートを開始します。" 
+                                                       f"賛成側の「AI」さん、主張を始めてください。時間制限は3分です。"})
+
+    return render_template('debate.html', debate=debate, feedback=feedback_list)
+
+
+@debate_bp.route('/interrupt/<int:debate_id>', methods=['POST'])
 def interrupt_debate(debate_id):
-    """ディベートを中断"""
-    if debate_id == debate_data["id"]:
-        debate_data["moderator_message"] = "ディベートが中断されました。"
-    return redirect(url_for('debate.debate'))
+    debate = AllDebate.query.get(debate_id)
+    if debate:
+        db.session.commit()
 
+    return redirect(url_for('mode.mode_selection'))

@@ -2,51 +2,46 @@
 <html lang="ja">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- モバイルデバイス対応 -->
-  <title>ディベートアプリ（仮）</title> <!-- 後で変えましょう！ -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='debate.css') }}"> <!-- 追加した -->
-  <script src="static/script.js" defer></script>
-  <script src="static/debate.js" defer></script> <!-- 追加した -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ（仮）</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='debate.css') }}">
 </head>
+
 <body>
     <header>
         <p class="debate-header">ディベート画面</p>
-        <div class="interrupt-button">
-            <!-- 中断ボタン -->
-            <form action="{{ url_for('debate.interrupt_debate', debate_id=debate.id) }}" method="post" id="interrupt-form">
-                <button class="interrupt" type="submit" onclick="return confirm('ディベートを中断しますか？')">中断</button>
+        <div class="button-group">
+            <form action="{{ url_for('mode.mode_selection') }}" method="GET" class="button-form">
+                <button type="submit" class="interrupt">中断</button>
+            </form>
+            <form action="{{ url_for('mode.mode_selection') }}" method="GET" class="button-form">
+                <button type="submit" class="stop">中止</button>
             </form>
         </div>
     </header>
+
     <main>
         <div class="time-theme">
             <p class="time">残り時間:<br>{{ debate.time }}</p>
-            <p class="theme">テーマ: {{ debate.topic }}</p>
+            <p class="theme">テーマ: {{ debate.category }}</p>
         </div>
         <div class="debate-dialog">
             <div class="chat-box">
-            <!-- 司会とAIの発言 -->
-            <div class="chat-entry-moderator">
-                <p class="speaker">司会:</p>
-                <p>{{ debate.moderator_message }}</p>
+                {% for message in feedback %}
+                    <div class="chat-entry {{ 'left' if message.speaker != 'ユーザー' else 'right' }}">
+                        <div class="speaker">{{ message.speaker }}</div>
+                        <div class="message">{{ message.message }}</div>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="chat-entry-ai">
-                <p class="speaker">AI:</p>
-                <p>{{ debate.ai_message }}</p>
-            </div>
-        
-            <!-- ユーザーの発言 -->
-            <div class="chat-entry-user">
-                <p class="speaker">ユーザー:</p>
-                <p>{{ debate.user_message }}</p>
-                <input type="text" id="debate.user_message" name="debate.user_message" placeholder="ここに入力してください">
-            </div>
-            </div>
+            <form action="{{ url_for('debate.debate') }}" method="POST">
+                <textarea name="user_message" placeholder="意見を入力してください"></textarea>
+                <button type="submit">送信</button>
+            </form>
         </div>
     </main>
 </body>
 
 </html>
-
