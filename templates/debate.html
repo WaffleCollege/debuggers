@@ -12,11 +12,11 @@
 <body>
     <header>
         <p class="debate-header">ディベート画面</p>
-        <div class="button-group">
+        <div>
             <form action="{{ url_for('mode.mode_selection') }}" method="GET" class="button-form">
                 <button type="submit" class="interrupt">中断</button>
             </form>
-            <form action="{{ url_for('mode.mode_selection') }}" method="GET" class="button-form">
+            <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
                 <button type="submit" class="stop">中止</button>
             </form>
         </div>
@@ -28,18 +28,27 @@
             <p class="theme">テーマ: {{ debate.category }}</p>
         </div>
         <div class="debate-dialog">
-            <div class="chat-box">
-                {% for message in feedback %}
-                    <div class="chat-entry {{ 'left' if message.speaker != 'ユーザー' else 'right' }}">
-                        <div class="speaker">{{ message.speaker }}</div>
-                        <div class="message">{{ message.message }}</div>
-                    </div>
-                {% endfor %}
+             <div class="chat-box">
+                    <!-- 会話履歴を表示 -->
+                    {% for message in feedback %}
+                        <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
+                            <div class="speaker">{{ message.speaker }}</div>
+                            <p class="message">{{ message.message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+    
+            
             </div>
             <form action="{{ url_for('debate.debate') }}" method="POST">
                 <textarea name="user_message" placeholder="意見を入力してください"></textarea>
                 <button type="submit">送信</button>
             </form>
+            {% if show_results_button %}
+            <form action="{{ url_for('debate.results') }}" method="GET">
+                <button type="submit" class="results-button">結果発表</button>
+            </form>
+        {% endif %}
         </div>
     </main>
 </body>
