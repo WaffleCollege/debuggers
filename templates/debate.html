@@ -5,17 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- モバイルデバイス対応 -->
   <title>ディベートアプリ（仮）</title> <!-- 後で変えましょう！ -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="debate.css"> <!-- 追加した -->
-  <script src="script.js" defer></script>
-  <script src="debate.js" defer></script> <!-- 追加した -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='debate.css') }}"> <!-- 追加した -->
+  <script src="static/script.js" defer></script>
+  <script src="static/debate.js" defer></script> <!-- 追加した -->
 </head>
 <body>
     <header>
         <p class="debate-header">ディベート画面</p>
         <div class="interrupt-button">
             <!-- 中断ボタン -->
-            <form action="{{ url_for('interrupt_debate', debate_id=debate.id) }}" method="post" id="interrupt-form">
+            <form action="{{ url_for('debate.interrupt_debate', debate_id=debate.id) }}" method="post" id="interrupt-form">
                 <button class="interrupt" type="submit" onclick="return confirm('ディベートを中断しますか？')">中断</button>
             </form>
         </div>
