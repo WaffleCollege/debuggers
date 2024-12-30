@@ -1,0 +1,71 @@
+.debate-header{
+    color: white;
+    position: absolute;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    left: 50%; 
+    font-size: 20px;
+    height: 30px;
+}
+
+.interrupt{
+    position: absolute;
+    right: 20px;
+    margin-top: 10px;
+    color: white;
+    font-size: 20px; 
+    height: 60px;
+    width: 120px;
+    border: 2px solid white;
+    border-radius: 5px; 
+    background: none;
+}
+
+.time-theme{
+    display: flex;
+}
+
+.time{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 15px; 
+    padding: 10px;
+    border: 2px solid #0396A6;
+    border-radius: 5px; 
+    background: none;
+    text-align: center;
+}
+
+.theme{
+    position: absolute;
+    left: 50%; 
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.debate-dialog{
+    margin-top: 100px;
+}
+
+.chat-entry-moderator{
+    display: flex;
+}
+
+.chat-entry-ai{
+    display: flex;
+}
+
+.chat-entry-user{
+    display: flex;
+    justify-content: right;
+}
+
+.speaker{
+    width:70px;
+    height: 70px;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
