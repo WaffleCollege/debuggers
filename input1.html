@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- モバイルデバイス対応 -->
+    <title>ディベートアプリ（仮）</title> <!-- 後で変えましょう！ -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <!-- {% block header %}{% endblock  %} --> <!-- Flaskを設定したら追加します -->
+    </header>
+    <!-- {% block content %}{% endblock  %} --> <!-- Flaskを設定したら追加します -->
+
+    <main id="result-screen" class="hidden">
+        <div class="result-container">
+            <h1 id="debate-complete" class="hidden">ディベート完了</h1>
+            <h1 id="winner" class="hidden">勝者: AI</h1>
+            <div id="evaluation-buttons" class="hidden">
+                <button id="sweet-evaluation">甘口の評価を見る</button>
+                <button id="harsh-evaluation">辛口の評価を見る</button>
+            </div>
+        </div>
+        <div id="evaluation-container" class="hidden">
+            <h2>評価</h2>
+            <div id="evaluation">
+                <!-- 評価内容をJSで動的に挿入 -->
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

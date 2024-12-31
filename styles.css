@@ -10,3 +10,29 @@ header {
     color: black;
     padding: 10px 0;
 }
+
+.hidden {
+    display: none;
+}
+
+.result-container {
+    text-align: center;
+    margin-top: 20%;
+}
+
+#debate-complete {
+    font-size: 2rem;
+    color: #333;
+}
+
+#evaluation-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#evaluation-container {
+    margin-top: 20px;
+    text-align: center;
+}
