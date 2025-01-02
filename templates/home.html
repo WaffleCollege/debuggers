@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ（仮）</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+
+<body>
+    <header>
+        
+    </header>
+
+    <main>
+        <div class="above">
+            <form action="{{ url_for('templates', filename='mode.html') }}" method="GET">
+                <button type="submit" class="results-button">ディベートを始める<br>メイン</button>
+            </form>
+            <form action="{{ url_for('templates', filename='??.html') }}" method="GET">    <!--urlが未完成-->
+                <button type="submit" class="results-button">就活モード</button>
+            </form>
+        </div>
+        <div class="below">
+            <form action="{{ url_for('templates', filename='??.html') }}" method="GET">    <!--urlが未完成-->
+                <button type="submit" class="results-button">今までのディベートを見返す</button>
+            </form>
+            <form action="{{ url_for('templates', filename='??.html') }}" method="GET">    <!--urlが未完成-->
+                <button type="submit" class="results-button">あなたの弱点</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
