@@ -7,6 +7,7 @@
     <title>ディベートアプリ（仮）</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='debate.css') }}">
+    <script src="debate.js" defer></script>
 </head>
 
 <body>
@@ -24,7 +25,10 @@
 
     <main>
         <div class="time-theme">
-            <p class="time">残り時間:<br>{{ debate.time }}</p>
+            <div class="time">
+                <p id="character">残り時間:</p>
+                <p id='timer'><span id='minute'></span>:<span id='second'></span></p>
+            </div>
             <p class="theme">テーマ: {{ debate.category }}</p>
         </div>
         <div class="debate-dialog">
@@ -41,7 +45,7 @@
             
             </div>
             <form action="{{ url_for('debate.debate') }}" method="POST">
-                <textarea name="user_message" placeholder="意見を入力してください"></textarea>
+                <textarea id="textinput" name="user_message" placeholder="意見を入力してください"></textarea>
                 <button type="submit">送信</button>
             </form>
             {% if show_results_button %}
