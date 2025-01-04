@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ（仮）</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='debuggers.css') }}">
+</head>
+
+<body>
+    <header>
+        <p class="debate-header">ディベート画面</p>
+        <div>
+            <form action="{{ url_for('mode.mode_selection') }}" method="GET" class="button-form">
+                <button type="submit" class="interrupt">中断</button>
+            </form>
+            <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
+                <button type="submit" class="interrupt">中断</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div class="time-theme">
+            <p class="time">残り時間:<br>{{ debate.time }}</p>
+            <p class="theme">テーマ: {{ debate.category }}</p>
+        </div>
+        <div class="debate-dialog">
+             <div class="chat-box">
+                    <!-- 会話履歴を表示 -->
+                    {% for message in feedback %}
+                        <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
+                            <div class="speaker">{{ message.speaker }}</div>
+                            <p class="message {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">{{ message.message }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+    
+            
+            </div>
+            <form action="{{ url_for('debate.debate') }}" method="POST">
+                <textarea name="user_message" placeholder="意見を入力してください"></textarea>
+                <button type="submit" class="btn">送信</button>
+            </form>
+            {% if show_results_button %}
+            <form action="{{ url_for('debate.results') }}" method="GET">
+                <button type="submit" class="btn">結果発表</button>
+            </form>
+        {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>

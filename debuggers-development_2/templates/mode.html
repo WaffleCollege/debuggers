@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モード選択</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mode.css') }}">
+</head>
+
+<body>
+    <header>
+    <p>ディベートモード選択</p>
+</header>
+    <div class="mode-buttons">
+    <form action="{{ url_for('mode.save_mode') }}" method="POST">
+        {% for mode in modes %}
+            <button type="submit" name="mode" value="{{ mode }}" class="btn">{{ mode }}</button>
+        {% endfor %}
+    </div>
+    </form>
+</body>
+
+</html>

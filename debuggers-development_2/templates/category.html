@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>カテゴリー選択</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='category.css') }}">
+</head>
+
+<body>
+    <header>
+    <p>カテゴリー選択</p>
+</header>
+    <form action="/category/submit_category" method="post">
+      <h3>カテゴリーを選択してください</h3>
+      <div class="category-buttons">
+      {% for category in categories %}
+          <button type="submit" name="category" value="{{ category }}" class="category-btn">{{ category }}</button>
+      {% endfor %}
+    </div>
+      <textarea name="free_text" placeholder="自由記述テーマを入力してください"></textarea>
+      <button type="submit" class="btn">送信</button>
+  </form>
+  
+  
+</body>
+</html>
+
+    
+    
+
+    </body>
+
+
+</html>
