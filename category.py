@@ -12,8 +12,14 @@ def category_selection():
 @category_bp.route('/submit_category', methods=['POST'])
 def submit_category():
     category = request.form.get('category')
+    topic = request.form.get('topic')  # 自由記述の場合のトピック
+
     debate = AllDebate.query.first()
     if debate:
-        debate.category = category
+        if category:
+            debate.category = category
+        if topic:
+            debate.topic = topic
         db.session.commit()
-    return redirect(url_for('debate.debate'))
+
+    return redirect(url_for('role.role_selection'))
