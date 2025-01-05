@@ -1,9 +1,10 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for,render_template
 from extensions import db
 from models import AllDebate
 from mode import mode_bp
 from category import category_bp
 from debate import debate_bp
+from role import role_bp
 from flask_migrate import Migrate
 
 # Flask アプリケーションの初期化
@@ -21,6 +22,7 @@ migrate = Migrate(app, db)
 app.register_blueprint(mode_bp)
 app.register_blueprint(category_bp)
 app.register_blueprint(debate_bp)
+app.register_blueprint(role_bp, url_prefix='/role') 
 
 @app.route('/')
 def home():
@@ -36,6 +38,7 @@ with app.app_context():
             user_1="ユーザー",
             user_2="AI",
             category="テクノロジー",
+            role = "先攻",
             topic="テクノロジーについて",
             feedback="[]",
             user_input_count=0,  # デフォルト値
@@ -46,3 +49,8 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.route('/')
+def home():
+    return render_template('home.html')  # 必要ならhome.htmlを作成
