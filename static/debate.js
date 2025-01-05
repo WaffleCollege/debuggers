@@ -55,3 +55,6 @@ textInput.addEventListener("input", () => {
     // タイマーを開始
     countDownTimer = setInterval(countDown, 1000);
 });
+
+
+

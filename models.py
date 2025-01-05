@@ -2,9 +2,9 @@ from extensions import db
 
 class AllDebate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(50), nullable=False, default="未設定")  
-    mode = db.Column(db.String(20), nullable=False, default="未設定")  
-    topic = db.Column(db.String(200), nullable=False, default="未設定") 
+    category = db.Column(db.String(50), nullable=False, default="")  
+    mode = db.Column(db.String(20), nullable=False, default="")  
+    topic = db.Column(db.String(200), nullable=False, default="") 
     user_1 = db.Column(db.String(50), nullable=False)
     user_2 = db.Column(db.String(50), nullable=False)
     user_1_claim = db.Column(db.Text, default="")

@@ -1,57 +1,126 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ディベートアプリ（仮）</title>
+    <title>ディベートアプリ</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='debate.css') }}">
 </head>
-
 <body>
     <header>
-        <p class="debate-header">ディベート画面</p>
-        <div>
-            <form action="{{ url_for('mode.mode_selection') }}" method="GET" class="button-form">
-                <button type="submit" class="interrupt">中断</button>
-            </form>
-            <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
-                <button type="submit" class="stop">中止</button>
+        <h1>ディベート画面</h1>
+        <div class="header-buttons">
+            <form action="{{ url_for('debate.stop_debate') }}" method="POST">
+                <button type="submit" class="stop-button">中止</button>
             </form>
         </div>
     </header>
 
     <main>
         <div class="time-theme">
-            <p class="time">残り時間:<br>{{ debate.time }}</p>
-            <p class="theme">テーマ: {{ debate.category }}</p>
+            <p class="theme">テーマ: {{ debate.topic or "未設定" }}</p>
         </div>
 
-        <div class="debate-dialog">
-             <div class="chat-box">
-                    <!-- 会話履歴を表示 -->
-                    {% for message in feedback %}
-                        <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
-                            <div class="speaker">{{ message.speaker }}</div>
-                            <p class="message">{{ message.message }}</p>
-                        </div>
-                    {% endfor %}
+        <!-- チャット履歴 -->
+        <div id="chat-box" class="chat-box">
+            {% for message in feedback %}
+                <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
+                    <div class="speaker">{{ message.speaker }}</div>
+                    <p class="message">{{ message.message }}</p>
                 </div>
-    
-            
-            </div>
-            <form action="{{ url_for('debate.debate') }}" method="POST">
-                <textarea name="user_message" placeholder="意見を入力してください"></textarea>
+            {% endfor %}
+        </div>
+
+        <!-- 入力フォーム -->
+        <div class="chat-input">
+            <form id="chat-form">
+                <textarea id="user-message" placeholder="意見を入力してください" required></textarea>
                 <button type="submit">送信</button>
             </form>
-            {% if show_results_button %}
-            <form action="{{ url_for('debate.results') }}" method="GET">
-                <button type="submit" class="results-button">結果発表</button>
-            </form>
-        {% endif %}
         </div>
     </main>
-</body>
 
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const chatForm = document.getElementById('chat-form');
+        const userMessageInput = document.getElementById('user-message');
+
+        // ステージを管理
+        let currentStage = "start";
+
+        // ステージの順序を管理
+        function getNextStage(current) {
+            const stages = [
+                "start",
+                "claim_user_1",
+                "claim_user_2",
+                "counter_user_1",
+                "counter_user_2",
+                "final_user_1",
+                "final_user_2",
+                "end"
+            ];
+
+            const currentIndex = stages.indexOf(current);
+            return currentIndex !== -1 && currentIndex < stages.length - 1
+                ? stages[currentIndex + 1]
+                : "end";
+        }
+
+        // チャット送信処理
+        chatForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // フォームのリロードを防止
+            const userMessage = userMessageInput.value.trim();
+
+            if (!userMessage && currentStage !== "start") {
+                alert("メッセージを入力してください");
+                return;
+            }
+
+            try {
+                // サーバーにメッセージと現在のステージを送信
+                const response = await fetch('{{ url_for("debate.progress_debate") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: userMessage,
+                        stage: currentStage
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // チャットボックスを更新
+                    chatBox.innerHTML = '';
+                    data.feedback.forEach(entry => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
+                        messageDiv.innerHTML = `
+                            <div class="speaker">${entry.speaker}</div>
+                            <p class="message">${entry.message}</p>
+                        `;
+                        chatBox.appendChild(messageDiv);
+                    });
+
+                    // 次のステージに進む
+                    currentStage = getNextStage(currentStage);
+
+                    // 入力フィールドをリセット
+                    if (currentStage !== "start") {
+                        userMessageInput.value = '';
+                    }
+                } else {
+                    alert(data.error || "エラーが発生しました");
+                }
+            } catch (error) {
+                console.error("サーバーエラー:", error);
+                alert("サーバーエラーが発生しました");
+            }
+        });
+    </script>
+</body>
 </html>
