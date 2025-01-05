@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ポジション選択</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>ポジションを選択してください</h1>
+    {% if category %}
+        <p>選択されたカテゴリー: {{ category }}</p>
+    {% elif topic %}
+        <p>自由記述のテーマ: {{ topic }}</p>
+    {% endif %}
+    <form action="/role/set_role" method="post">
+        <button type="submit" name="position" value="先攻">先攻（賛成）</button>
+        <button type="submit" name="position" value="後攻">後攻（反対）</button>
+    </form>
+</body>
+</html>
+
+
+
