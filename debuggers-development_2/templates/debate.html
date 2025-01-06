@@ -44,6 +44,33 @@
                 <textarea name="user_message" placeholder="意見を入力してください"></textarea>
                 <button type="submit" class="btn">送信</button>
             </form>
+                        <!-- 音声入力ボタン -->
+                        <button type="button" id="start-recording" class="btn">音声入力</button>
+
+                        <script>
+                            const startRecordingButton = document.getElementById("start-recording");
+                            const textarea = document.querySelector("textarea[name='user_message']");
+            
+                            startRecordingButton.addEventListener("click", function () {
+                                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                                recognition.lang = "ja-JP";
+                                recognition.interimResults = false;
+                                recognition.maxAlternatives = 1;
+            
+                                recognition.start();
+            
+                                recognition.onresult = function (event) {
+                                    const transcript = event.results[0][0].transcript;
+                                    textarea.value = transcript;  // テキストエリアに音声認識結果を挿入
+                                };
+            
+                                recognition.onerror = function (event) {
+                                    console.error("音声認識エラー: ", event.error);
+                                    alert("音声認識に失敗しました。");
+                                };
+                            });
+                        </script>
+                        
             {% if show_results_button %}
             <form action="{{ url_for('debate.results') }}" method="GET">
                 <button type="submit" class="btn">結果発表</button>
