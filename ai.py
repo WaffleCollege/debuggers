@@ -6,6 +6,7 @@ openai.project =''
 openai.api_key = ''
 
 
+
 # OpenAI APIを使用してテーマを生成する関数
 def generate_theme(category):
     prompt = f"あなたはディベートテーマを生成するAIです。{category}に関連する、賛成と反対が対立する30文字以内の議題を1つ作成し、議題のみを答えてください。"
