@@ -1,46 +1,44 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // 要素の取得
-    const resultScreen = document.getElementById("result-screen");
-    const debateCompleteElement = document.getElementById("debate-complete");
-    const winnerElement = document.getElementById("winner");
+// 勝敗と評価を表示する関数
+async function showDebateResult() {
+    const resultElement = document.getElementById("debate-result");
     const evaluationButtons = document.getElementById("evaluation-buttons");
-    const evaluationContainer = document.getElementById("evaluation-container");
-    const evaluationElement = document.getElementById("evaluation");
-    const sweetEvaluationButton = document.getElementById("sweet-evaluation");
-    const harshEvaluationButton = document.getElementById("harsh-evaluation");
+    const mildButton = document.getElementById("mild-evaluation");
+    const harshButton = document.getElementById("harsh-evaluation");
 
-    // 勝敗データ（仮）
-    const winner = "AI"; // "AI" または "あなた"
-    const sweetEvaluation = "良い議論でした！明確な論点で説得力がありました。";
-    const harshEvaluation = "もう少し証拠を具体的に説明する必要があります。結論が弱い点が課題です。";
+    // ローディング表示
+    resultElement.textContent = "結果を判定中...";
+    resultElement.style.display = "block";
 
-    // ディベート終了画面を表示
-    resultScreen.classList.remove("hidden");
-    debateCompleteElement.classList.remove("hidden");
+    // ディベートデータを仮に設定（実際にはサーバー側から受け取る）
+    const debateData = {
+        debateContent: "ディベートの内容をサーバーに送信します。",
+    };
 
-    // 3秒後に「ディベート完了」から「勝者」に切り替え
-    setTimeout(() => {
-        debateCompleteElement.classList.add("hidden"); // ディベート完了を非表示
-        winnerElement.textContent = `勝者: ${winner}`;
-        winnerElement.classList.remove("hidden"); // 勝者を表示
-        evaluationButtons.classList.remove("hidden"); // 評価ボタンを表示
-    }, 3000);
+    try {
+        // サーバーにリクエストを送信（Axiosを使用）
+        const response = await axios.post('/api/getDebateResult', debateData);
+        const result = response.data;
 
-    // 甘口評価ボタンの動作
-    sweetEvaluationButton.addEventListener("click", () => {
-        evaluationContainer.classList.remove("hidden");
-        evaluationElement.innerHTML = `
-            <p>評価タイプ: <strong>甘口</strong></p>
-            <p>${sweetEvaluation}</p>
-        `;
-    });
+        // 勝敗を画面に表示
+        resultElement.textContent = `勝者: ${result.winner}`;
+        resultElement.style.backgroundColor = result.winner === "AI" ? "#FFDD57" : "#FF6F61";
 
-    // 辛口評価ボタンの動作
-    harshEvaluationButton.addEventListener("click", () => {
-        evaluationContainer.classList.remove("hidden");
-        evaluationElement.innerHTML = `
-            <p>評価タイプ: <strong>辛口</strong></p>
-            <p>${harshEvaluation}</p>
-        `;
-    });
-});
+        // ボタンを表示して評価を確認できるようにする
+        evaluationButtons.style.display = "block";
+
+        // ボタンのクリックイベントを設定
+        mildButton.onclick = () => displayEvaluation(result.mildEvaluation, "甘口");
+        harshButton.onclick = () => displayEvaluation(result.harshEvaluation, "辛口");
+    } catch (error) {
+        console.error("エラー:", error);
+        resultElement.textContent = "エラーが発生しました。もう一度試してください。";
+    }
+}
+
+// 評価をモーダル形式で表示する関数
+function displayEvaluation(evaluation, type) {
+    alert(`${type}の評価:\n${evaluation}`);
+}
+
+// ディベート終了後、3秒で結果を表示
+setTimeout(showDebateResult, 3000);

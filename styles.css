@@ -3,36 +3,105 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    position: relative;
+
+    font-family: 'Meiryo UI', 'ヒラギノ丸ゴ ProN', 'Hiragino Maru Gothic ProN', cursive;
 }
 
 header {
+    position: fixed;
     background-color: #0396A6;
-    color: black;
-    padding: 10px 0;
+    height: 80px;
+    width: 100%;
+    top: 0;
+    left: 50%;
+    /* 中央に配置 */
+    transform: translateX(-50%);
+    /* 中央揃えにする */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    /* 中央揃え */
+    align-items: center;
+    /* 垂直方向に中央揃え */
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.hidden {
-    display: none;
+main {
+    padding-top: 80px;
 }
 
-.result-container {
+h1 {
     text-align: center;
-    margin-top: 20%;
 }
 
-#debate-complete {
-    font-size: 2rem;
+/* 勝敗結果のスタイル */
+#debate-result {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    display: inline-block;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* ボタンエリアのスタイル */
+#evaluation-buttons {
+    margin-top: 20px;
+}
+
+/* ボタンのスタイル */
+button {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* 甘口の評価ボタン */
+#mild-evaluation {
+    background-color: #FFDD57;
     color: #333;
 }
 
-#evaluation-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+#mild-evaluation:hover {
+    background-color: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-#evaluation-container {
-    margin-top: 20px;
-    text-align: center;
+/* 辛口の評価ボタン */
+#harsh-evaluation {
+    background-color: #FF6F61;
+    color: white;
+}
+
+#harsh-evaluation:hover {
+    background-color: #E64A45;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
