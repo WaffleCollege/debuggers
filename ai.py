@@ -1,9 +1,10 @@
 import openai
 
 # OpenAI APIキーとモデル名を設定
-openai.organization = '' 
+openai.organization = '' # ここに組織IDを設定
 openai.project =''
 openai.api_key = ''
+
 
 # OpenAI APIを使用してテーマを生成する関数
 def generate_theme(category):
