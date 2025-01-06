@@ -1,0 +1,38 @@
+body {
+    background-color: #F2F2F2;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+    font-family: 'Meiryo UI', 'ヒラギノ丸ゴ ProN', 'Hiragino Maru Gothic ProN', cursive;
+}
+
+header {
+    position: fixed;
+    background-color: #0396A6;
+    height: 80px;
+    width: 100%;
+    top: 0;
+    left: 50%;
+    /* 中央に配置 */
+    transform: translateX(-50%);
+    /* 中央揃えにする */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    /* 中央揃え */
+    align-items: center;
+    /* 垂直方向に中央揃え */
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+main {
+    padding-top: 80px;
+}
+
+h1 {
+    text-align: center;
+}
