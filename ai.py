@@ -7,7 +7,7 @@ openai.api_key = ''
 
 # OpenAI APIを使用してテーマを生成する関数
 def generate_theme(category):
-    prompt = f"あなたはディベートテーマを生成するAIです。カテゴリーが「{category}」の場合、賛成と反対が対立する30文字以内のテーマを1つ作成してください。"
+    prompt = f"あなたはディベートテーマを生成するAIです。{category}に関連する、賛成と反対が対立する30文字以内の議題を1つ作成し、議題のみを答えてください。"
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
@@ -18,11 +18,11 @@ def generate_theme(category):
 
 # 主張
 def generate_claim(topic, position):
-    prompt = f"ディベートテーマは「{topic}」です。あなたは{position}側として、300字以内で主張を生成してください。"
+    prompt = f"ディベートテーマは{topic}です。あなたは{position}側として、300字以内で主張を生成してください。"
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
-        max_tokens=300,
+        max_tokens=400,
         temperature=0.7,
     )
     return response['choices'][0]['message']['content'].strip()
@@ -33,7 +33,7 @@ def generate_counter(topic, user_claim, position):
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
-        max_tokens=300,
+        max_tokens=400,
         temperature=0.7,
     )
     return response['choices'][0]['message']['content'].strip()
@@ -44,7 +44,7 @@ def generate_final(topic, user_claim, user_counter, position):
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
-        max_tokens=300,
+        max_tokens=400,
         temperature=0.7,
     )
     return response['choices'][0]['message']['content'].strip()
