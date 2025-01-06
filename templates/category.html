@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='category.css') }}">
 </head>
 <body>
+  <header>
+    <h1>カテゴリー選択画面</h1>
+</header>
+
+<main>
     <!-- ボタン -->
     <form action="/category/submit_category" method="post">
       {% for category in categories %}
@@ -24,6 +29,7 @@
         </div>
       </div>
     </form>
+  </main>
 
     <script>
       const modal = document.getElementById('modal');
