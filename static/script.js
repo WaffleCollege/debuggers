@@ -15,3 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     setInterval(updateTimer, 1000);
 });
+
+
+
