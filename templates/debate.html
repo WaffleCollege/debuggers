@@ -39,6 +39,12 @@
                 <button type="submit">送信</button>
             </form>
         </div>
+
+        <div id="evaluation-button" style="display: none;">
+            <form action="{{ url_for('debate.show_evaluation') }}" method="GET">
+                <button type="submit">評価画面へ</button>
+            </form>
+        </div>
     </main>
 
     <script>
@@ -68,59 +74,68 @@
                 : "end";
         }
 
-        // チャット送信処理
-        chatForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // フォームのリロードを防止
-            const userMessage = userMessageInput.value.trim();
+       // チャット送信処理
+chatForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // フォームのリロードを防止
+    const userMessage = userMessageInput.value.trim();
 
-            if (!userMessage && currentStage !== "start") {
-                alert("メッセージを入力してください");
-                return;
-            }
+    if (!userMessage && currentStage !== "start") {
+        alert("メッセージを入力してください");
+        return;
+    }
 
-            try {
-                // サーバーにメッセージと現在のステージを送信
-                const response = await fetch('{{ url_for("debate.progress_debate") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: userMessage,
-                        stage: currentStage
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    // チャットボックスを更新
-                    chatBox.innerHTML = '';
-                    data.feedback.forEach(entry => {
-                        const messageDiv = document.createElement('div');
-                        messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
-                        messageDiv.innerHTML = `
-                            <div class="speaker">${entry.speaker}</div>
-                            <p class="message">${entry.message}</p>
-                        `;
-                        chatBox.appendChild(messageDiv);
-                    });
-
-                    // 次のステージに進む
-                    currentStage = getNextStage(currentStage);
-
-                    // 入力フィールドをリセット
-                    if (currentStage !== "start") {
-                        userMessageInput.value = '';
-                    }
-                } else {
-                    alert(data.error || "エラーが発生しました");
-                }
-            } catch (error) {
-                console.error("サーバーエラー:", error);
-                alert("サーバーエラーが発生しました");
-            }
+    try {
+        // サーバーにメッセージと現在のステージを送信
+        const response = await fetch('{{ url_for("debate.progress_debate") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: userMessage,
+                stage: currentStage
+            }),
         });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // チャットボックスを更新
+            chatBox.innerHTML = '';
+            data.feedback.forEach(entry => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
+                messageDiv.innerHTML = `
+                    <div class="speaker">${entry.speaker}</div>
+                    <p class="message">${entry.message}</p>
+                `;
+                chatBox.appendChild(messageDiv);
+            });
+
+            // 次のステージに進む
+            currentStage = getNextStage(currentStage);
+
+            // 入力フィールドをリセット
+            if (currentStage !== "start") {
+                userMessageInput.value = '';
+            }
+
+            // ステージが "end" になった場合、評価画面へのボタンを表示
+            if (currentStage === "end") {
+                const evaluationButton = document.getElementById("evaluation-button");
+                if (evaluationButton) {
+                    evaluationButton.style.display = "block"; // ボタンを表示
+                }
+            }
+        } else {
+            alert(data.error || "エラーが発生しました");
+        }
+    } catch (error) {
+        console.error("サーバーエラー:", error);
+        alert("サーバーエラーが発生しました");
+    }
+});
+
     </script>
 </body>
 </html>
