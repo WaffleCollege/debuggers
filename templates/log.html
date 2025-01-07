@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='log.css') }}">
+</head>
+<body>
+    <header>
+        <h1>ディベート画面</h1>
+        <div class="header-buttons">
+            <form action="{{ url_for('debate.stop_debate') }}" method="POST">
+                <button type="submit" class="stop-button">中止</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div>
+            <p>
+              <label for="title">タイトル：</label><input type="text" name="title" value={{blog.title}} />
+            </p>
+            <p>
+              <label for="user_name">投稿者名：</label><input type="text" name="user_name" value={{blog.user_name}} />
+            </p>
+            <p>
+              <label for="body">内容：</label><textarea name="body" cols="40" rows="10"  >{{blog.body}}</textarea>
+            </p>
+        </div>
+    </main>
+</body>
+</html>

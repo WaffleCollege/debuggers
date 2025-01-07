@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='log.css') }}">
+</head>
+<body>
+    <header>
+        <h1>ディベート画面</h1>
+        <div class="header-buttons">
+            <form action="{{ url_for('debate.stop_debate') }}" method="POST">
+                <button type="submit" class="stop-button">中止</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <div>
+            <ul>
+              {% for blog in blogs %} <!-- ループさせてそれぞれ要素を取り出す -->
+              <li><a href="{{url_for('get_blog', id=blog.id)}}">{{ blog.title }}</a></li> <!-- ブログ編集画面へのリンク -->
+               {% endfor %}
+            </ul>
+          </div>
+    </main>
+</body>
+</html>
