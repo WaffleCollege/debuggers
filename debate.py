@@ -131,3 +131,13 @@ def progress_debate():
 def stop_debate():
     print("Debate stopped")
     return redirect(url_for('home'))
+
+
+@debate_bp.route('/evaluation', methods=['GET'])
+def show_evaluation():
+    debate = AllDebate.query.order_by(AllDebate.id.desc()).first()
+    if not debate:
+        return "ディベートが存在しません", 404
+
+    # 評価用のデータを渡す
+    return render_template('input1.html', debate=debate)

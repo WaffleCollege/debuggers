@@ -67,4 +67,4 @@ def generate_moderator_comment(stage, debate):
     elif stage == "final_user_2":
         return f"それでは、反対側の{debate.user_2}さん、これまでの議論を踏まえて、最終立論を始めてください。時間制限は3分です。"
     elif stage == "end":
-        return f"これで「{debate.topic}」のディベートは終了です。"
+        return f"これで「{debate.topic}」のディベートは終了です。評価画面へ移動してください。"
