@@ -1,0 +1,238 @@
+.debate-header{
+    color: white;
+    position: absolute;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    left: 50%; 
+    transform: translateX(-50%); /* 真ん中に配置 */
+    font-size: 24px;
+    font-weight: bold;
+    height: auto; /* 高さを自動調整 */
+}
+.debate-dialog{
+    margin-top: 100px;
+}
+
+    .interrupt{
+        position: absolute;
+        right: 20px;          /* 右側から20px */
+        top: 50%;             /* ヘッダーの中央に配置 */
+        transform: translateY(-50%);
+        height: 40px;         /* 高さ40px */
+        width: 100px;         /* 幅100px */
+        font-size: 16px;      /* フォントサイズ16px */
+        font-family: "Noto Sans Japanese";  /* フォントファミリー */
+        color: white;         /* 文字色白 */
+        line-height: 40px;    /* テキスト中央揃え */
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
+        font-weight: 500;
+        background:none;
+        box-shadow: 0 1px 5px lightgray;
+        -webkit-box-shadow: 0 1px 5px lightgray;
+        border-radius: 9999px;
+        border: none;
+    }
+
+.interrupt:hover {
+    color: #fff;
+    opacity: 0.5;
+}
+.interrupt:after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(45deg) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    border-radius: 1px;
+    transition: 0.3s ease-in-out;
+}
+.interrupt:hover:after {
+    border-color: #fff;
+}
+
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px;
+    
+}
+
+.time-theme{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.time{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 15px; 
+    padding: 10px;
+    color: white;
+    background: black;
+    border: 2px solid black;
+    border-radius: 5px; 
+    text-align: center;
+}
+
+.theme{
+    position: absolute;
+    left: 40%; 
+    margin-top: 20px;
+    font-size: 18px;
+}
+.chat-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.chat-entry.left {
+    justify-content: flex-start;/* 左に寄せる */
+    flex-direction: row;
+}
+
+.chat-entry.right {
+    justify-content: flex-end;/* 右に寄せる */
+    flex-direction: row-reverse;
+}
+
+.speaker {
+    width: 70px;
+    height: 70px;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* アイコンに影を付ける */
+    border: 2px solid #ccc;
+    border-radius: 50%; /* 丸くする */
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    flex-direction: row; 
+}
+.speaker.right {
+    justify-content: flex-end;/* 右に寄せる */
+
+}
+.speaker.left {
+    justify-content: flex-start;/* 左に寄せる */
+
+}
+
+/*チャット*/
+.message {
+    margin-top: 35px; 
+    max-width: 60%;  /* メッセージの最大幅 */
+    padding: 12px 20px;  /* 吹き出しの内側の余白 */
+    border-radius: 20px;  /* 吹き出しを丸みを帯びた形に */
+    background: #aadddd;  /* ユーザーのメッセージの背景色 */
+    color: rgb(4, 0, 0);  /* メッセージの文字色 */
+    font-size: 15px;  /* メッセージの文字サイズ */
+    line-height: 1.4;  /* 行間 */
+    position: relative;  /* 三角形の位置調整のため */
+}
+
+/* 右側のメッセージ（ユーザーのメッセージ） */
+.message.right {
+    background: white;  /* ユーザーのメッセージの背景色 */
+    color: black;  /* 文字色を白に */
+    margin-left: auto;  /* 右に寄せる */
+}
+
+/* 吹き出しの三角形（右側） */
+.message.right::after {
+    content: '';  /* 三角形 */
+    position: absolute;
+    top: 50%;
+    right: -10px;  /* 吹き出しの外に三角形が出るように */
+    width: 0;
+    height: 0;
+    border-left: 10px solid white;  /* 緑色の三角形 */
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    transform: translateY(-50%);  /* 三角形を中央に配置 */
+}
+
+/* 左側のメッセージ（相手のメッセージ） */
+.message.left {
+    background: #b0e0e6;  /* 相手のメッセージの背景色 */
+    color: #333;  /* 文字色 */
+    margin-right: auto;  /* 左に寄せる */
+}
+
+/* 吹き出しの三角形（左側） */
+.message.left::after {
+    content: '';  /* 三角形 */
+    position: absolute;
+    top: 50%;
+    left: -10px;  /* 吹き出しの外に三角形が出るように */
+    width: 0;
+    height: 0;
+    border-right: 10px solid #b0e0e6;  /* 白色の三角形 */
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    transform: translateY(-50%);  /* 三角形を中央に配置 */
+}
+
+
+
+
+
+textarea[name="user_message"] {
+    margin-left: 20px;
+    width: 80%;
+    height: 100px; /* 高さを大きく設定 */
+    font-size: 18px; /* フォントサイズを大きく設定 */
+    padding: 10px; /* 内側の余白を設定 */
+    border: 2px solid #ccc; /* 境界線を太く設定 */
+    border-radius: 5px; /* 角を丸める */
+    resize: none; /* サイズ変更を無効化 */
+}
+
+
+
+/*ボタン*/
+
+.btn {
+    
+        display: inline-block; /* ボタンをインライン要素に */
+        padding: 10px  15px; /* ボタン内のスペース */
+        font-size: 15px; /* フォントサイズ */
+        font-weight: bold; /* 太字 */
+        color: #fff; /* 文字色 */
+        background-color: #12627d; /* 背景色 */
+        border: 2px solid #12627d; /* 枠線 */
+        border-radius: 5px; /* 丸みを持たせる */
+        text-align: center; /* 文字を中央に */
+        text-decoration: none; /* テキストの下線をなくす */
+        transition: all 0.3s ease; /* ホバー時のトランジション */
+    }
+    
+    /* ボタンのホバー時のスタイル */
+    .btn:hover {
+        background-color: #0396A6; /* ホバー時の背景色 */
+        color: #fff; /* ホバー時の文字色 */
+        border-color: #0396A6; /* ホバー時の枠線色 */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* シャドウを追加 */
+        transform: translateY(-2px); /* ボタンが少し浮き上がる */
+    }
+    
+    /* ボタンがアクティブ（クリック時） */
+    .btn:active {
+        background-color: #0396A6; /* クリック時の背景色 */
+        border-color: #0396A6; /* クリック時の枠線色 */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* クリック時のシャドウ */
+        transform: translateY(0); /* クリック時に浮き上がり効果をなくす */
+    }
+    
