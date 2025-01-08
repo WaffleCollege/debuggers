@@ -2,15 +2,17 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>カテゴリー選択</title>
+    <p>カテゴリー選択</p>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='category.css') }}">
 </head>
 <body>
     <!-- ボタン -->
     <form action="/category/submit_category" method="post">
+      <h3>カテゴリーを選択してください</h3>
+      <div class="category-buttons">
       {% for category in categories %}
-        <button type="submit" name="category" value="{{ category }}">{{ category }}</button>
+          <button type="submit" name="category" value="{{ category }}" class="category-btn">{{ category }}</button>
       {% endfor %}
       <!-- 自由記述 -->
       <button type="button" id="modalButton">自由記述</button>
