@@ -9,12 +9,13 @@
 </head>
 <body>
     <header>
-        <h1>ディベート画面</h1>
-        <div class="header-buttons">
-            <form action="{{ url_for('debate.stop_debate') }}" method="POST">
-                <button type="submit" class="stop-button">中止</button>
-            </form>
-        </div>
+        <header>
+            <p class="debate-header">ディベート画面</p>
+            <div class="header-buttons">
+                <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
+                    <button type="submit" class="interrupt">中断</button>
+                </form>
+            </div>
     </header>
 
     <main>
@@ -24,11 +25,12 @@
         </div>
 
         <!-- チャット履歴 -->
-        <div id="chat-box" class="chat-box">
-            {% for message in feedback %}
+        <div class="debate-dialog">
+            <div class="chat-box">
+                {% for message in feedback %}
                 <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
                     <div class="speaker">{{ message.speaker }}</div>
-                    <p class="message">{{ message.message }}</p>
+                    <p class="message {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">{{ message.message }}</p>
                 </div>
             {% endfor %}
         </div>

@@ -10,12 +10,18 @@
 </head>
 
 <body>
-    <h1>ディベートモード選択</h1>
-    <form action="{{ url_for('mode.save_mode') }}" method="POST">
-        {% for mode in modes %}
-            <button type="submit" name="mode" value="{{ mode }}">{{ mode }}</button>
-        {% endfor %}
-    </form>
+    <header>
+        <p>ディベートモード選択</p>
+    </header>
+   <main>
+    <div class="mode-buttons">
+        <form action="{{ url_for('mode.save_mode') }}" method="POST">
+            {% for mode in modes %}
+                <button type="submit" name="mode" value="{{ mode }}" class="btn">{{ mode }}</button>
+            {% endfor %}
+        </div>
+        </form>
+    </main>
 </body>
 
 </html>
