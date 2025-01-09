@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ（仮）</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <script defer>
+        async function showDebateResult() {
+            // 勝敗を判定するリクエスト（OpenAI APIの呼び出し）
+            const debateData = {
+                debateContent: "ディベートの内容をここに送信します"
+            };
+
+            try {
+                const response = await axios.post('/api/getDebateResult', debateData);
+                const result = response.data;
+
+                // 勝敗表示
+                const resultElement = document.getElementById("debate-result");
+                resultElement.textContent = `勝者: ${result.winner}`;
+                resultElement.style.display = "block";
+
+                // ボタンを表示
+                document.getElementById("evaluation-buttons").style.display = "block";
+
+                // ボタンに評価を設定
+                document.getElementById("mild-evaluation").onclick = () => alert(result.mildEvaluation);
+                document.getElementById("harsh-evaluation").onclick = () => alert(result.harshEvaluation);
+            } catch (error) {
+                console.error("Error fetching debate result:", error);
+                alert("エラーが発生しました。もう一度試してください。");
+            }
+        }
+
+        // 3秒後に結果を表示
+        setTimeout(showDebateResult, 3000);
+    </script>
+</head>
+
+<body>
+    <header>
+        <!-- {% block header %}{% endblock  %} -->
+    </header>
+    <main>
+        <h1>ディベート結果</h1>
+        <div id="debate-result" style="display: none; font-size: 24px; text-align: center; margin-top: 20px;"></div>
+        <div id="evaluation-buttons" style="display: none; text-align: center; margin-top: 20px;">
+            <button id="mild-evaluation" style="margin-right: 10px;">甘口の評価を見る</button>
+            <button id="harsh-evaluation">辛口の評価を見る</button>
+        </div>
+    </main>
+</body>
+
+</html>
