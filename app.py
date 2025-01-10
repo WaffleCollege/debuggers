@@ -1,11 +1,10 @@
 from flask import Flask, redirect, url_for,render_template
 from extensions import db
 from models import AllDebate
-from mode import mode_bp
-from category import category_bp
 from debate import debate_bp
-from role import role_bp
 from flask_migrate import Migrate
+from setting import setting_bp# setting_bpのインポートを追加
+
 
 # Flask アプリケーションの初期化
 app = Flask(__name__)
@@ -19,15 +18,13 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 # ブループリントの登録
-app.register_blueprint(mode_bp)
-app.register_blueprint(category_bp)
 app.register_blueprint(debate_bp)
-app.register_blueprint(role_bp, url_prefix='/role') 
+app.register_blueprint(setting_bp)
 
 @app.route('/')
 def home():
-    """ルートURLにアクセスした際にモード選択画面にリダイレクト"""
-    return redirect(url_for('mode.mode_selection'))
+    """ルートURLにアクセスした際に設定画面にリダイレクト 一旦設定画面です"""
+    return redirect(url_for('setting.setting'))
 
 # アプリケーションコンテキスト内で初期設定
 with app.app_context():
@@ -51,6 +48,4 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-@app.route('/')
-def home():
-    return render_template('home.html')  # 必要ならhome.htmlを作成
+
