@@ -144,7 +144,6 @@
     max-width: 60%;  /* メッセージの最大幅 */
     padding: 12px 20px;  /* 吹き出しの内側の余白 */
     border-radius: 20px;  /* 吹き出しを丸みを帯びた形に */
-    background: white;  /* ユーザーのメッセージの背景色 */
     color: rgb(4, 0, 0);  /* メッセージの文字色 */
     font-size: 15px;  /* メッセージの文字サイズ */
     line-height: 1.4;  /* 行間 */
