@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モード設定画面</title>
+    <style>
+        .selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!--ホームへ帰るボタン-->
+    </header>
+
+    <form id="settingForm" action="{{ url_for('setting.setting') }}" method="post">
+        <!--モード選択ボタン-->
+        <div class="mode-buttons">
+            <h3>難易度</h3>
+            {% for mode in modes %}
+                <button type="button" onclick="selectMode(this)" value="{{ mode }}" class="btn">{{ mode }}</button>
+            {% endfor %}
+        </div>
+
+        <!--カテゴリー選択ボタン-->
+        <div class="category-buttons">
+            <h3>カテゴリーを選択してください</h3>
+            {% for category in categories %}
+                <button type="button" onclick="selectCategory(this)" value="{{ category }}" class="category-btn">{{ category }}</button>
+            {% endfor %}
+            <!-- 自由記述 -->
+            <button type="button" id="modalButton">自由記述</button>
+        </div>
+
+        <!--ポジション選択ボタン-->
+        <div class="position_content">
+            <h3>ポジションを選択してください</h3>
+            <button type="button" onclick="selectPosition(this)" value="先攻">先攻（賛成）</button>
+            <button type="button" onclick="selectPosition(this)" value="後攻">後攻（反対）</button>
+        </div>
+
+        <div class="debate_start_button">
+            <button type="submit" name="start_button" value="スタートボタン">ディベートスタート</button>
+        </div>
+
+        <!-- 隠しフィールド -->
+        <input type="hidden" id="selectedMode" name="mode">
+        <input type="hidden" id="selectedCategory" name="category">
+        <input type="hidden" id="selectedTopic" name="topic">
+        <input type="hidden" id="selectedPosition" name="position">
+    </form>
+
+    <!-- モーダル -->
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>議論したいテーマを記述してください</p>
+            <textarea id="freeText"></textarea>
+            <button onclick="saveTopic()">送信</button>
+        </div>
+    </div>
+
+    <script>
+        function selectMode(button) {
+            clearSelection('.mode-buttons button');
+            button.classList.add('selected');
+            document.getElementById('selectedMode').value = button.value;
+        }
+
+        function selectCategory(button) {
+            clearSelection('.category-buttons button');
+            button.classList.add('selected');
+            document.getElementById('selectedCategory').value = button.value;
+        }
+
+        function selectPosition(button) {
+            clearSelection('.position_content button');
+            button.classList.add('selected');
+            document.getElementById('selectedPosition').value = button.value;
+        }
+
+        function clearSelection(selector) {
+            document.querySelectorAll(selector).forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function saveTopic() {
+            const topic = document.getElementById('freeText').value;}
