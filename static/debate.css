@@ -22,7 +22,7 @@
         font-size: 16px;      /* フォントサイズ16px */
         font-family: "Noto Sans Japanese";  /* フォントファミリー */
         color: black;         /* 文字色 */
-        line-height: 40px;    /* テキスト中央揃え */
+        line-height: 35px;    /* テキスト中央揃え */
         text-decoration: none;
         transition: 0.3s ease-in-out;
         font-weight: 500;
@@ -92,8 +92,9 @@
 
 .theme{
     color: black;
+    font-weight: bold;
     position: absolute;
-    left: 40%; 
+    left: 35%; 
     margin-top: 20px;
     font-size: 18px;
 }
@@ -120,14 +121,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* アイコンに影を付ける */
     border: 2px solid black;
     border-radius: 50%; /* 丸くする */
-    font-size: 14px;
-    font-weight: bold;
 
+    overflow: hidden; /* 画像が丸枠からはみ出さないようにする */
+}
+
+/* 画像に関するスタイル */
+.speaker img {
+    width: 100%;  /* 画像を親要素の幅に合わせる */
+    height: 100%; /* 画像を親要素の高さに合わせる */
+    object-fit: cover; /* 画像の縦横比を保ちつつ親要素にぴったり合わせる */
 }
 .speaker.right {
     justify-content: flex-end;/* 右に寄せる */
@@ -202,7 +208,7 @@
 
 
 textarea[name="user_message"] {
-    margin-left: 20px;
+    margin-left: 50px;
     width: 80%;
     height: 100px; /* 高さを大きく設定 */
     font-size: 18px; /* フォントサイズを大きく設定 */
@@ -248,7 +254,7 @@ textarea[name="user_message"] {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* クリック時のシャドウ */
         transform: translateY(0); /* クリック時に浮き上がり効果をなくす */
     }
-     /* 評価画面へのボタン (resultbtn) */
+   /* 評価画面へのボタン (resultbtn) */
 .resultbtn {
     padding: 12px 50px; /* 上下12px、左右30px の余白 */
     font-size: 16px;     /* フォントサイズ */
@@ -271,5 +277,3 @@ textarea[name="user_message"] {
     background-color: #ee5822; /* 背景色を少し暗くする */
     text-decoration: underline;  /* ホバー時にアンダーライン */
 }
-
-    

@@ -24,16 +24,24 @@
         </div>
 
         <!-- チャット履歴 -->
-        <div class="debate-dialog">
-            <div id="chat-box" class="chat-box">
+        <div id="chat-box" class="debate-dialog">
                 {% for message in feedback %}
                 <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
-                    <div class="speaker {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">{{ message.speaker }}</div>
+                    <div class="speaker {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
+                        <!-- スピーカーがユーザー、AI、司会者それぞれで異なる画像を設定 -->
+                        {% if message.speaker == 'ユーザー' %}
+                            <img src="{{ url_for('static', filename='images/user_icon.JPG') }}" alt="ユーザー アイコン">
+                        {% elif message.speaker == 'AI' %}
+                            <img src="{{ url_for('static', filename='images/ai_icon.JPG') }}" alt="AI アイコン">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/host_icon.JPG') }}" alt="司会者 アイコン">
+                        {% endif %}
+                    </div>
                     <p class="message {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">{{ message.message }}</p>
                 </div>
             {% endfor %}
         </div>
-    </div>
+
 
         <!-- 入力フォーム -->
         <div class="chat-input">
@@ -41,6 +49,7 @@
                 <textarea id="user-message" name="user_message" placeholder="意見を入力してください" required></textarea>
                 <button type="submit" class="btn">送信</button>
             </form>
+            
         </div>
 
         <div id="evaluation-button" style="display: none;">
@@ -51,6 +60,10 @@
     </main>
 
     <script>
+        const userIconUrl = "{{ url_for('static', filename='images/user_icon.JPG') }}";
+        const aiIconUrl = "{{ url_for('static', filename='images/ai_icon.JPG') }}";
+        const hostIconUrl = "{{ url_for('static', filename='images/host_icon.JPG') }}";
+
         const chatBox = document.getElementById('chat-box');
         const chatForm = document.getElementById('chat-form');
         const userMessageInput = document.getElementById('user-message');
@@ -108,8 +121,18 @@ chatForm.addEventListener('submit', async (event) => {
             data.feedback.forEach(entry => {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
-                messageDiv.innerHTML = `
-                    <div class="speaker">${entry.speaker}</div>
+                // スピーカーに応じたアイコンを設定
+                let speakerIcon = '';
+                if (entry.speaker === 'ユーザー') {
+                    speakerIcon = `<img src="${userIconUrl}" alt="ユーザー アイコン">`;
+                } else if (entry.speaker === 'AI') {
+                    speakerIcon = `<img src="${aiIconUrl}" alt="AI アイコン">`;
+                } else {
+                    speakerIcon = `<img src="${hostIconUrl}" alt="司会者 アイコン">`;
+                        }
+             // messageDiv.innerHTML に画像とメッセージを組み合わせる
+             messageDiv.innerHTML = `
+                    <div class="speaker">${speakerIcon}</div>
                     <p class="message ${entry.speaker === 'ユーザー' ? 'right' : 'left'}">${entry.message}</p>
                 `;
                 chatBox.appendChild(messageDiv);
