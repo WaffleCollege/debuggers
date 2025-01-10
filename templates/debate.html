@@ -9,8 +9,7 @@
 </head>
 <body>
     <header>
-        <header>
-            <p class="debate-header">ディベート画面</p>
+
             <div class="header-buttons">
                 <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
                     <button type="submit" class="interrupt">中断</button>
@@ -25,26 +24,28 @@
         </div>
 
         <!-- チャット履歴 -->
-        <div id="chat-box" class="debate-dialog">
+        <div class="debate-dialog">
+            <div id="chat-box" class="chat-box">
                 {% for message in feedback %}
                 <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
-                    <div class="speaker">{{ message.speaker }}</div>
+                    <div class="speaker {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">{{ message.speaker }}</div>
                     <p class="message {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">{{ message.message }}</p>
                 </div>
             {% endfor %}
         </div>
+    </div>
 
         <!-- 入力フォーム -->
         <div class="chat-input">
             <form id="chat-form">
-                <textarea id="user-message" placeholder="意見を入力してください" required></textarea>
-                <button type="submit">送信</button>
+                <textarea id="user-message" name="user_message" placeholder="意見を入力してください" required></textarea>
+                <button type="submit" class="btn">送信</button>
             </form>
         </div>
 
         <div id="evaluation-button" style="display: none;">
             <form action="{{ url_for('debate.show_evaluation') }}" method="GET">
-                <button type="submit">評価画面へ</button>
+                <button type="submit" class="resultbtn">結果を見る</button>
             </form>
         </div>
     </main>
@@ -109,7 +110,7 @@ chatForm.addEventListener('submit', async (event) => {
                 messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
                 messageDiv.innerHTML = `
                     <div class="speaker">${entry.speaker}</div>
-                    <p class="message">${entry.message}</p>
+                    <p class="message ${entry.speaker === 'ユーザー' ? 'right' : 'left'}">${entry.message}</p>
                 `;
                 chatBox.appendChild(messageDiv);
             });

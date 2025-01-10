@@ -248,4 +248,28 @@ textarea[name="user_message"] {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* クリック時のシャドウ */
         transform: translateY(0); /* クリック時に浮き上がり効果をなくす */
     }
+     /* 評価画面へのボタン (resultbtn) */
+.resultbtn {
+    padding: 12px 50px; /* 上下12px、左右30px の余白 */
+    font-size: 16px;     /* フォントサイズ */
+    font-weight: bold;   /* 太字 */
+    color: black;        /* 文字色 */
+    background-color: #f27141; 
+    border: none;       
+    border-radius: 15px; 
+    cursor: pointer;     /* マウスカーソルをポインタに */
+    transition: background-color 0.3s ease; /* ホバー時のアニメーション */
+
+        /* ボタンを中央に配置する */
+        display: block;        /* ブロック要素にして幅を設定 */
+        width: 60%;            /* ボタンの幅を指定、例えば60%に設定 */
+        margin: 0 auto;        /* 左右自動で中央に配置 */
+}
+
+/* ボタンホバー時のスタイル */
+.resultbtn:hover {
+    background-color: #ee5822; /* 背景色を少し暗くする */
+    text-decoration: underline;  /* ホバー時にアンダーライン */
+}
+
     
