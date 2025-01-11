@@ -8,8 +8,31 @@
     font-weight: bold;
     height: auto; /* 高さを自動調整 */
 }
+/* 横並びアイコン用のコンテナ */
+.header-links-container {
+    display: flex;
+    align-items: center;  /* アイコンを垂直中央揃え */
+    justify-content: flex-start; /* 左揃え */
+
+    position: absolute; 
+    top: 20px; /* 上端に配置 */
+    left: 10px; /* 左端に配置 */
+    z-index: 10; /* 他の要素よりも前面に表示 */
+}
 .debate-dialog{
     margin-top: 100px;
+}
+.header-link {
+    border: none;
+    margin-right: 15px; /* アイコンの間隔 */
+    display: inline-block;
+    background: transparent; 
+}
+
+.header-icon {
+    width: 50px; /* アイコンのサイズ */
+    height: 50px;
+    transition: transform 0.3s;
 }
 
     .interrupt{
@@ -85,7 +108,7 @@
     padding: 10px;
     color: black;
     background: #f2d680;
-    border: 2px solid black;
+    border:1px solid black;
     border-radius: 5px; 
     text-align: center;
 }

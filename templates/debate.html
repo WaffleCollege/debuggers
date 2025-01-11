@@ -10,7 +10,23 @@
 <body>
     <header>
 
-            <div class="header-buttons">
+    <div class="header-buttons">
+        <div class="header-links-container">
+<!-- ホーム画面に戻るアイコン -->
+<form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
+    <button type="submit" class="header-link">
+        <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
+    </button>
+</form>
+
+<!-- 戻る アイコン -->
+<form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
+    <button type="submit" class="header-link">
+        <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
+    </button>
+</form>
+</div>
+        <!-- 中断ボタン -->
                 <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
                     <button type="submit" class="interrupt">中断</button>
                 </form>
@@ -19,7 +35,7 @@
 
     <main>
         <div class="time-theme">
-            <p id="time">残り時間:03:00</p>
+            <p id="time">残り時間:3:00</p>
             <p class="theme">テーマ: {{ debate.topic or "未設定" }}</p>
         </div>
 

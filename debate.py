@@ -131,6 +131,16 @@ def progress_debate():
 def stop_debate():
     print("Debate stopped")
     return redirect(url_for('home'))
+#ホーム画面に戻る
+@debate_bp.route('/home', methods=['POST'])
+def home_debate():
+    print("Back to home")
+    return redirect(url_for('home'))
+#前に戻る
+@debate_bp.route('/back', methods=['POST'])
+def back_debate():
+    print("Back to previous screen")
+    return redirect(url_for('setting'))
 
 @debate_bp.route('/evaluation', methods=['GET'])
 def show_evaluation():
