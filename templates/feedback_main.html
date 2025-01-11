@@ -1,104 +1,117 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ディベートアプリ</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='feedback_main.css') }}">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ディベートアプリ</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='feedback_main.css') }}">
 </head>
 <body>
-    <!-- ヘッダー -->
-    <header class="header">
-        <div class="header-links-container">
-            <!-- ホーム画面に戻る -->
-            <form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
-                <button type="submit" class="header-link">
-                    <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="ホームアイコン" class="header-icon">
-                </button>
-            </form>
-            <!-- 戻る -->
-            <form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
-                <button type="submit" class="header-link">
-                    <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻るアイコン" class="header-icon">
-                </button>
-            </form>
-        </div>
-    </header>
+   <!-- ヘッダー -->
+   <header class="header">
+       <div class="header-links-container">
+           <!-- ホーム画面に戻る -->
+           <form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
+               <button type="submit" class="header-link">
+                   <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="ホームアイコン" class="header-icon">
+               </button>
+           </form>
+           <!-- 戻る -->
+           <form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
+               <button type="submit" class="header-link">
+                   <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻るアイコン" class="header-icon">
+               </button>
+           </form>
+       </div>
+   </header>
 
-    <!-- メインコンテンツ -->
-    <main class="main-content">
-        <h1>結果は……</h1>
-        <!-- 勝敗結果を動的に表示 -->
-        <h2 id="result" class="result">判定中...</h2>
-        <!-- 勝者のアイコン -->
-        <div id="winner" class="winner">
-            <img id="winner-icon" src="" alt="勝者のアイコン" style="display: none;">
-        </div>
-        <p>勝ち負けだけが重要ではありません<br>あなたへのフィードバックを見てみましょう</p>
-        <div class="arrow">⬇︎</div>
-        <p>どちらのフィードバックがいいですか？</p>
 
-        <!-- フィードバックボタン -->
-        <div class="buttons">
-            <!-- 甘口のフィードバック -->
-            <form action="/feedback" method="POST">
-                <input type="hidden" name="feedback_type" value="sweet">
-                <input type="hidden" id="mild-feedback" name="mildEvaluation" value="">
-                <button type="submit" class="feedback-button sweet">甘口のフィードバック！</button>
-            </form>
-            <!-- 辛口のフィードバック -->
-            <form action="/feedback" method="POST">
-                <input type="hidden" name="feedback_type" value="spicy">
-                <input type="hidden" id="harsh-feedback" name="harshEvaluation" value="">
-                <button type="submit" class="feedback-button spicy">辛口のフィードバック！</button>
-            </form>
-        </div>
-    </main>
+   <!-- メインコンテンツ -->
+   <main class="main-content">
+       <h1>結果は……</h1>
+       <!-- 勝敗結果を動的に表示 -->
+       <h2 id="result" class="result">判定中...</h2>
+       <!-- 勝者のアイコン -->
+       <div id="winner" class="winner">
+           <img id="winner-icon" src="" alt="勝者のアイコン" style="display: none;">
+       </div>
+       <p>勝ち負けだけが重要ではありません<br>あなたへのフィードバックを見てみましょう</p>
+       <div class="arrow">⬇︎</div>
+       <p>どちらのフィードバックがいいですか？</p>
 
-    <script>
-        // 勝敗結果を取得して表示
-        async function showDebateResult() {
-            const debateContent = "ディベート内容をサーバーに送信"; // 適切な内容を挿入
 
-            try {
-                // APIから勝敗結果を取得
-                const response = await fetch('/api/getDebateResult', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ debateContent })
-                });
-                const result = await response.json();
+       <!-- フィードバックボタン -->
+       <div class="buttons">
+           <form action="/feedback" method="POST">
+               <input type="hidden" name="feedback_type" value="sweet">
+               <input type="hidden" id="mild-feedback" name="mildEvaluation" value="ここに甘口フィードバックが入ります">
+               <button type="submit" class="feedback-button sweet">甘口のフィードバック！</button>
+           </form>
+          
+           <form action="/feedback" method="POST">
+               <input type="hidden" name="feedback_type" value="spicy">
+               <input type="hidden" id="harsh-feedback" name="harshEvaluation" value="ここに辛口フィードバックが入ります">
+               <button type="submit" class="feedback-button spicy">辛口のフィードバック！</button>
+           </form>
+          
+       </div>
+   </main>
 
-                // 勝者の判定に基づいて結果を動的に更新
-                const resultElement = document.getElementById('result');
-                const winnerIcon = document.getElementById('winner-icon');
 
-                if (result.winner === 'ユーザー') {
-                    resultElement.textContent = 'あなたの勝ち！';
-                    winnerIcon.src = "{{ url_for('static', filename='images/user_icon.JPG') }}";
-                } else if (result.winner === 'AI') {
-                    resultElement.textContent = 'AIの勝ち！';
-                    winnerIcon.src = "{{ url_for('static', filename='images/ai_icon.JPG') }}";
-                } else {
-                    resultElement.textContent = '引き分け！';
-                    winnerIcon.src = "{{ url_for('static', filename='images/draw_icon.JPG') }}"; // 引き分けアイコン（任意）
-                }
+   <script>
+      async function showDebateResult() {
+   try {
+       // APIから勝敗結果を取得
+       const response = await fetch('/api/evaluateDebate', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ debateContent: "ディベート内容をサーバーに送信" }) // 適切な内容を挿入
+       });
 
-                // 勝者のアイコンを表示
-                winnerIcon.style.display = 'block';
 
-                // フィードバック内容を設定
-                document.getElementById('mild-feedback').value = result.mildEvaluation;
-                document.getElementById('harsh-feedback').value = result.harshEvaluation;
-            } catch (error) {
-                console.error("Error fetching debate result:", error);
-                alert("結果の取得中にエラーが発生しました。");
-            }
-        }
+       // レスポンスを JSON として解析
+       const result = await response.json();
 
-        // ページ読み込み時に結果を取得
-        document.addEventListener('DOMContentLoaded', showDebateResult);
-    </script>
+
+       // 勝者の判定に基づいて結果を動的に更新
+       const resultElement = document.getElementById('result');
+       const winnerIcon = document.getElementById('winner-icon');
+
+
+       if (response.ok) {
+           if (result.winner === 'ユーザー') {
+               resultElement.textContent = 'あなたの勝ち！';
+               winnerIcon.src = "{{ url_for('static', filename='images/user_icon.JPG') }}";
+           } else if (result.winner === 'AI') {
+               resultElement.textContent = 'AIの勝ち！';
+               winnerIcon.src = "{{ url_for('static', filename='images/ai_icon.JPG') }}";
+           }
+
+
+           // 勝者のアイコンを表示
+           winnerIcon.style.display = 'block';
+
+
+           // フィードバック内容を設定
+           document.getElementById('mild-feedback').value = result.mildFeedback || "甘口のフィードバックが生成されませんでした";
+           document.getElementById('harsh-feedback').value = result.harshFeedback || "辛口のフィードバックが生成されませんでした";
+       } else {
+           resultElement.textContent = 'エラー: サーバーから適切なレスポンスがありません';
+           console.error("Server Error:", result);
+       }
+   } catch (error) {
+       console.error("Error fetching debate result:", error);
+       alert("結果の取得中にエラーが発生しました。");
+   }
+}
+
+
+// ページ読み込み時に結果を取得
+document.addEventListener('DOMContentLoaded', showDebateResult);
+
+
+   </script>
 </body>
 </html>
+
