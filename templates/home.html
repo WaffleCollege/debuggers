@@ -11,23 +11,23 @@
 
 <body>
     <header>
-        
+        <h1>ディベートアプリ（仮）</h1>
     </header>
 
     <main>
         <div class="above">
-            <form action="{{ url_for('templates', filename='mode.html') }}" method="GET">
+            <form action="{{ url_for('start_main') }}" method="GET">
                 <button type="submit" class="results-button">ディベートを始める<br>メイン</button>
             </form>
-            <form action="{{ url_for('templates', filename='??.html') }}" method="GET">    <!--urlが未完成-->
+            <form action="{{ url_for('start_job_mode') }}" method="GET">
                 <button type="submit" class="results-button">就活モード</button>
             </form>
         </div>
         <div class="below">
-            <form action="{{ url_for('templates', filename='??.html') }}" method="GET">    <!--urlが未完成-->
+            <form action="{{ url_for('view_debates') }}" method="GET">
                 <button type="submit" class="results-button">今までのディベートを見返す</button>
             </form>
-            <form action="{{ url_for('templates', filename='??.html') }}" method="GET">    <!--urlが未完成-->
+            <form action="{{ url_for('view_weakness') }}" method="GET">
                 <button type="submit" class="results-button">あなたの弱点</button>
             </form>
         </div>

@@ -140,7 +140,7 @@ def home_debate():
 @debate_bp.route('/back', methods=['POST'])
 def back_debate():
     print("Back to previous screen")
-    return redirect(url_for('setting'))
+    return redirect(url_for('setting.setting'))
 
 @debate_bp.route('/evaluation', methods=['GET'])
 def show_evaluation():

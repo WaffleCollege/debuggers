@@ -21,10 +21,33 @@ migrate = Migrate(app, db)
 app.register_blueprint(debate_bp)
 app.register_blueprint(setting_bp)
 
+
 @app.route('/')
 def home():
-    """ルートURLにアクセスした際に設定画面にリダイレクト 一旦設定画面です"""
-    return redirect(url_for('setting.setting'))
+    return render_template('home.html')  # 必要ならhome.htmlを作成
+
+
+# メインディベートモード
+@app.route('/start_main', methods=['GET'])
+def start_main():
+     return redirect(url_for('setting.setting'))
+
+# 就活モード
+@app.route('/start_job_mode', methods=['GET'])
+def start_job_mode():
+    return render_template('job_mode.html')  # job_mode.html を表示
+
+# 過去のディベートを表示
+@app.route('/view_debates', methods=['GET'])
+def view_debates():
+    return render_template('debates.html')  # debates.html を表示
+
+# 弱点を表示
+@app.route('/view_weakness', methods=['GET'])
+def view_weakness():
+    return render_template('weakness.html')  # weakness.html を表示
+
+
 
 # アプリケーションコンテキスト内で初期設定
 with app.app_context():

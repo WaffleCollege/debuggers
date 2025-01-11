@@ -26,27 +26,14 @@ button[type="submit"]:hover {
     border-color: #027a85; /* ホバー時のボーダー色 */
 }
 
-.above{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
+.above, .below {
+    position: relative; /* 絶対位置ではなく通常のフローで配置 */
     display: flex;
     justify-content: center; /* 横方向の中央揃え */
     align-items: center;
-    padding-top: 500px;
-    
+    margin: 20px 0; /* 上下にマージンを設定 */
 }
 
-.below{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center; /* 横方向の中央揃え */
-    align-items: center;
-    padding-top: 800px;
-}
 
 
