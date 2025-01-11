@@ -2,8 +2,21 @@ from flask import Blueprint, request, render_template, redirect, url_for
 from extensions import db
 from models import AllDebate
 
+
+
 # モード選択、カテゴリー選択、ロール選択を一つのBlueprintに
 setting_bp = Blueprint('setting', __name__)
+
+#ホーム画面に戻る
+@setting_bp.route('/home', methods=['POST'])
+def home():
+    print("Back to home")
+    return redirect(url_for('home'))
+#前に戻る
+@setting_bp.route('/back', methods=['POST'])
+def back():
+    print("Back to previous screen")
+    return redirect(url_for('home'))
 
 @setting_bp.route('/setting', methods=['GET', 'POST'])
 def setting():

@@ -16,12 +16,22 @@
 </head>
 <body>
     <header>
+<!-- ホーム画面に戻るアイコン -->
+<form action="{{ url_for('setting.home') }}" method="POST" class="button-form">
+    <button type="submit" class="header-link">
+        <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
+    </button>
+</form>
 
-            <div class="header-buttons">
-                <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
-                    <button type="submit" class="interrupt">中断</button>
-                </form>
-            </div>
+<!-- 戻る アイコン -->
+<form action="{{ url_for('setting.back') }}" method="POST" class="button-form">
+    <button type="submit" class="header-link">
+        <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
+    </button>
+<h1>ディベート設定画面</h1>
+</header>
+<main>
+<h1>ディベート設定画面</h1>
     </header>
     <main>
     <h1>ディベート設定画面</h1>
