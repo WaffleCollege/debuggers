@@ -34,19 +34,29 @@ def start_debate():
     if not debate:
         return jsonify({"error": "ディベートが見つかりません"}), 404
 
+    # テーマが未設定の場合にテーマを生成
     if not debate.topic or debate.topic == "未設定":
-        debate.topic = generate_theme(debate.category or "未設定")  # 未設定の場合にデフォルト値を設定
-        db.session.commit()
+        try:
+            category = debate.category if debate.category and debate.category != "未設定" else "テクノロジー"
+            debate.topic = generate_theme(category)
+            db.session.commit()
+        except Exception as e:
+            print(f"テーマ生成中にエラー: {str(e)}")
+            return jsonify({"error": "テーマ生成に失敗しました"}), 500
 
-    # 司会の開始コメントを追加
-    feedback = json.loads(debate.feedback) if debate.feedback else []
+    # フィードバックリセット
+    debate.feedback = "[]"
+    db.session.commit()
+
+    # 開始メッセージを追加
+    feedback = json.loads(debate.feedback)
     moderator_message = generate_moderator_comment("start", debate)
     feedback.append({"speaker": "司会", "message": moderator_message})
-
     debate.feedback = json.dumps(feedback)
     db.session.commit()
 
-    return redirect(url_for('debate.debate'))  # debate 関数にリダイレクト
+    return render_template('debate.html', debate=debate, feedback=feedback)
+
 
 @debate_bp.route('/progress', methods=['POST'])
 def progress_debate():
@@ -163,7 +173,3 @@ def show_evaluation():
 
 
 
-@debate_bp.route('/history', methods=['GET'])
-def debate_history():
-    all_debates = AllDebate.query.order_by(AllDebate.id.desc()).all()
-    return render_template('debate_history.html', debates=all_debates)
