@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディベートアプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='feedback_main.css') }}">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-links-container">
+            <!-- ホーム画面に戻る -->
+            <form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
+                <button type="submit" class="header-link">
+                    <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="ホームアイコン" class="header-icon">
+                </button>
+            </form>
+            <!-- 戻る -->
+            <form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
+                <button type="submit" class="header-link">
+                    <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻るアイコン" class="header-icon">
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <h1>結果は……</h1>
+        <h2 class="result">あなたの勝ち！</h2>
+        <!-- 勝者のアイコン -->
+        <div class="winner">
+            <img src="{{ url_for('static', filename='images/user_icon.JPG') }}" alt="ユーザーアイコン">
+        </div>
+        <p>勝ち負けだけが重要ではありません<br>あなたへのフィードバックを見てみましょう</p>
+        <div class="arrow">⬇︎</div>
+        <p>どちらのフィードバックがいいですか？</p>
+
+       <!-- フィードバックボタン -->
+       <div class="buttons">
+        <!-- 甘口のフィードバック -->
+        <form action="/feedback" method="POST">
+            <input type="hidden" name="feedback_type" value="sweet">
+            <button type="submit" class="feedback-button sweet">甘口のフィードバック！</button>
+        </form>
+        <!-- 辛口のフィードバック -->
+        <form action="/feedback" method="POST">
+            <input type="hidden" name="feedback_type" value="spicy">
+            <button type="submit" class="feedback-button spicy">辛口のフィードバック！</button>
+        </form>
+    </div>
+    </main>
+</body>
+</html>

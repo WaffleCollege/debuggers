@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for,render_template
 from extensions import db
 from models import AllDebate
 from debate import debate_bp
+from feedback_mock import feedback_bp
 from flask_migrate import Migrate
 from setting import setting_bp# setting_bpのインポートを追加
 
@@ -20,7 +21,7 @@ migrate = Migrate(app, db)
 # ブループリントの登録
 app.register_blueprint(debate_bp)
 app.register_blueprint(setting_bp)
-
+app.register_blueprint(feedback_bp)
 
 @app.route('/')
 def home():

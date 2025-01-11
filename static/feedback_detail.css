@@ -1,0 +1,97 @@
+/* ベーススタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fef8f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* ヘッダー */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #fffaf9;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.header-links-container {
+    display: flex;
+    gap: 15px;
+}
+
+.header-link {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.header-icon {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s;
+}
+
+.header-icon:hover {
+    transform: scale(1.1);
+}
+
+/* メインコンテンツ */
+.main-content {
+    margin-top: 100px; /* ヘッダー分の余白 */
+    text-align: center;
+    padding: 20px;
+}
+
+.main-content h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* フィードバックボックス */
+.feedback-box {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* ディベート終了ボタン */
+.end-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f27141;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.end-button:hover {
+    background-color: #d85a2d;
+    transform: translateY(-2px);
+}
+
+/* フォームのスタイル */
+.end-debate-form {
+    text-align: center;
+    margin-top: 20px;
+}

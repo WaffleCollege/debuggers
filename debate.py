@@ -149,4 +149,4 @@ def show_evaluation():
         return "ディベートが存在しません", 404
 
     # 評価用のデータを渡す
-    return render_template('input1.html', debate=debate)
+    return render_template('feedback_main.html', debate=debate)
