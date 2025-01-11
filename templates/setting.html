@@ -65,10 +65,11 @@
             </div>
 
             <!-- 隠しフィールド -->
-            <input type="hidden" id="selectedMode" name="mode">
-            <input type="hidden" id="selectedCategory" name="category">
-            <input type="hidden" id="selectedTopic" name="topic">
-            <input type="hidden" id="selectedPosition" name="position">
+            <input type="hidden" id="selectedMode" name="mode" value="">
+            <input type="hidden" id="selectedCategory" name="category" value="">
+            <input type="hidden" id="selectedTopic" name="topic" value="">
+            <input type="hidden" id="selectedPosition" name="position" value="">
+
         </form>
     </main>
 
@@ -99,6 +100,7 @@
             button.classList.add('selected');
             document.getElementById('selectedMode').value = button.value;
         }
+        
 
         function selectCategory(button) {
             clearSelection('.category-buttons button');

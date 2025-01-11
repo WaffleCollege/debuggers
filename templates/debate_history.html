@@ -1,0 +1,21 @@
+<h1>過去のディベート</h1>
+<table>
+    <thead>
+        <tr>
+            <th>日時</th>
+            <th>テーマ</th>
+            <th>モード</th>
+            <th>カテゴリー</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for debate in debates %}
+        <tr>
+            <td>{{ debate.timestamp }}</td>
+            <td>{{ debate.topic }}</td>
+            <td>{{ debate.mode }}</td>
+            <td>{{ debate.category }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

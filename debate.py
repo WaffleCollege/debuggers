@@ -6,25 +6,36 @@ from extensions import db
 
 debate_bp = Blueprint('debate', __name__, url_prefix='/debate')
 
-# ディベート画面の初期化
 @debate_bp.route('/debate', methods=['GET'])
 def debate():
+    # 最新のデータを取得
     debate = AllDebate.query.order_by(AllDebate.id.desc()).first()
+
     if not debate:
-        return "ディベートデータが存在しません。", 404
+        # データが存在しない場合のみ新規作成
+        debate = AllDebate(
+            user_1="ユーザー",
+            user_2="AI",
+            category="未設定",
+            role="先攻",
+            topic="未設定",
+            feedback="[]"
+        )
+        db.session.add(debate)
+        db.session.commit()
 
     feedback = json.loads(debate.feedback) if debate.feedback else []
     return render_template('debate.html', debate=debate, feedback=feedback)
 
-# ディベート開始時の設定
+
 @debate_bp.route('/start', methods=['GET'])
 def start_debate():
     debate = AllDebate.query.order_by(AllDebate.id.desc()).first()
     if not debate:
         return jsonify({"error": "ディベートが見つかりません"}), 404
 
-    if not debate.topic:
-        debate.topic = generate_theme(debate.category)
+    if not debate.topic or debate.topic == "未設定":
+        debate.topic = generate_theme(debate.category or "未設定")  # 未設定の場合にデフォルト値を設定
         db.session.commit()
 
     # 司会の開始コメントを追加
@@ -35,9 +46,8 @@ def start_debate():
     debate.feedback = json.dumps(feedback)
     db.session.commit()
 
-    return render_template('debate.html', debate=debate, feedback=feedback)
+    return redirect(url_for('debate.debate'))  # debate 関数にリダイレクト
 
-# ステージ進行を処理
 @debate_bp.route('/progress', methods=['POST'])
 def progress_debate():
     try:
@@ -150,3 +160,10 @@ def show_evaluation():
 
     # 評価用のデータを渡す
     return render_template('feedback_main.html', debate=debate)
+
+
+
+@debate_bp.route('/history', methods=['GET'])
+def debate_history():
+    all_debates = AllDebate.query.order_by(AllDebate.id.desc()).all()
+    return render_template('debate_history.html', debates=all_debates)

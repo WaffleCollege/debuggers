@@ -11,6 +11,9 @@ def setting():
     categories = ['環境問題', '教育', '社会問題', 'テクノロジー']
 
     if request.method == 'POST':
+        # POST データをログ出力
+        print("Received POST data:", request.form)
+
         # フォームデータから値を取得
         mode = request.form.get('mode')
         category = request.form.get('category')
@@ -18,10 +21,12 @@ def setting():
         position = request.form.get('position')
         start_button = request.form.get('start_button')
 
-        # `AllDebate`レコードを取得または作成
-        debate = AllDebate.query.first()
+        print(f"Mode: {mode}, Category: {category}, Topic: {topic}, Position: {position}")
+
+        # `AllDebate` レコードを取得または作成
+        debate = AllDebate.query.order_by(AllDebate.id.desc()).first()
         if not debate:
-            debate = AllDebate()  # レコードが存在しない場合は新規作成
+            debate = AllDebate()
 
         # データの更新
         debate.mode = mode
@@ -40,7 +45,5 @@ def setting():
         if start_button:
             return redirect(url_for('debate.start_debate'))
 
-    # データベースから既存のデータを取得
-    debate = AllDebate.query.first()
-
+    debate = AllDebate.query.order_by(AllDebate.id.desc()).first()
     return render_template('setting.html', modes=modes, categories=categories, debate=debate)
