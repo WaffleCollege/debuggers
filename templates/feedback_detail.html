@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>フィードバック</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='feedback_detail.css') }}">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>フィードバック</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='feedback_detail.css') }}">
 </head>
 <body>
-    <!-- ヘッダー -->
-    <header class="header">
-        <div class="header-links-container">
-            <!-- ホーム画面に戻る -->
-            <form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
-                <button type="submit" class="header-link">
-                    <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="ホームアイコン" class="header-icon">
-                </button>
-            </form>
-            <!-- 戻る -->
-            <form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
-                <button type="submit" class="header-link">
-                    <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻るアイコン" class="header-icon">
-                </button>
-            </form>
-        </div>
-    </header>
+   <!-- ヘッダー -->
+   <header class="header">
+       <div class="header-links-container">
+           <!-- ホーム画面に戻る -->
+           <form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
+               <button type="submit" class="header-link">
+                   <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="ホームアイコン" class="header-icon">
+               </button>
+           </form>
+           <!-- 戻る -->
+           <form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
+               <button type="submit" class="header-link">
+                   <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻るアイコン" class="header-icon">
+               </button>
+           </form>
+       </div>
+   </header>
 
-    <!-- メインコンテンツ -->
-    <main class="main-content">
-        <h1>フィードバック</h1>
-        <div class="feedback-box">
-            <p>{{ feedback_message }}</p> <!-- Flaskで甘口や辛口のフィードバックを渡す -->
-        </div>
-        <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="end-debate-form">
-            <button type="submit" class="end-button">ディベートを終了する</button>
-        </form>
-    </main>
+
+   <!-- メインコンテンツ -->
+   <main class="main-content">
+       <h1>フィードバック</h1>
+       <div class="feedback-box">
+           <p>{{ feedback_message }}</p> <!-- Flaskで甘口や辛口のフィードバックを渡す -->
+       </div>
+       <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="end-debate-form">
+           <button type="submit" class="end-button">ディベートを終了する</button>
+       </form>
+   </main>
 </body>
 </html>
+
+
+
