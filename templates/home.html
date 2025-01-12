@@ -7,29 +7,51 @@
     <title>ディベートアプリ（仮）</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New&family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <h1>ディベートアプリ（仮）</h1>
+        <div class="header-buttons">
+            <div class="header-links-container">
+                <!-- ホーム画面に戻るアイコン -->
+                <button type="submit" class="header-link">
+                    <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
+                </button>
+            
+                <!-- 戻る アイコン -->
+                <button type="submit" class="header-link">
+                    <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
+                </button>
+        </div>
     </header>
 
     <main>
-        <div class="above">
-            <form action="{{ url_for('start_main') }}" method="GET">
-                <button type="submit" class="results-button">ディベートを始める<br>メイン</button>
-            </form>
-            <form action="{{ url_for('start_job_mode') }}" method="GET">
-                <button type="submit" class="results-button">就活モード</button>
-            </form>
-        </div>
-        <div class="below">
-            <form action="{{ url_for('debate.debate_history') }}" method="GET">
-                <button type="submit" class="results-button">今までのディベートを見返す</button>
-            </form>
-            <form action="{{ url_for('view_weakness') }}" method="GET">
-                <button type="submit" class="results-button">あなたの弱点</button>
-            </form>
+        <div class="content">
+            <h1>今日は何をしましょう？<h1>
+            <div class="selection">
+                <div class="left">
+                    <form action="{{ url_for('start_main') }}" method="GET">
+                        <button type="submit" class="debate">ディベート</button>
+                    </form>
+                </div>
+                <div class="right">
+                    <div class="top">
+                        
+                            <button type="submit" class="reflect">記録</button>
+                        
+                            <button type="submit" class="weak">私の弱点</button>
+                        
+                    </div>
+                    <div class="down">
+                        <form action="{{ url_for('start_job_mode') }}" method="GET">
+                            <button type="submit" class="syukatsu">就活モード<br>ディベート</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 </body>

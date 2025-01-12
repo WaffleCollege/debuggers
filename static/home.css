@@ -1,39 +1,102 @@
-textarea[name="user_message"] {
-    width: 80%; /* 幅を80%に設定 */
-    height: 100px; /* 高さを大きく設定 */
-    font-size: 18px; /* フォントサイズを大きく設定 */
-    padding: 10px; /* 内側の余白を設定 */
-    border: 2px solid #ccc; /* 境界線を太く設定 */
-    border-radius: 5px; /* 角を丸める */
-    resize: none; /* サイズ変更を無効化 */
+/* 横並びアイコン用のコンテナ */
+.header-links-container {
+    display: flex;
+    align-items: center;  /* アイコンを垂直中央揃え */
+    justify-content: flex-start; /* 左揃え */
+
+    position: absolute; 
+    top: 20px; /* 上端に配置 */
+    left: 10px; /* 左端に配置 */
+    z-index: 10; /* 他の要素よりも前面に表示 */
 }
 
-button[type="submit"] {
-    font-size: 18px; /* ボタン内の文字サイズを大きく設定 */
-    padding: 10px 20px; /* ボタンの上下左右の余白を設定 */
-    background-color: #0396A6; /* 背景色を設定 */
-    color: white; /* 文字色を白に設定 */
-    border: 2px solid #0396A6; /* ボーダーを背景と同じ色に設定 */
-    border-radius: 5px; /* 角を丸める */
-    cursor: pointer; /* マウスオーバー時にポインタを表示 */
-    height: 100px;
-    width: 300px;
-    margin: 0px 20px;
+.header-icon {
+    width: 50px; /* アイコンのサイズ */
+    height: 50px;
+}
+
+.header-link{
+    background-color: #fffaf9;
+    border: none;  /* ボタンの枠線を消す */
+    cursor: pointer; 
+}
+
+.content{
+
+}
+
+h1{
+    color: black;
+    font-family: "Zen Maru Gothic", serif;
+    font-size: 25.6px;
+    margin-left: 10px;
 }
 
 button[type="submit"]:hover {
-    background-color: #027a85; /* ホバー時の背景色 */
-    border-color: #027a85; /* ホバー時のボーダー色 */
+    opacity: 0.6;
 }
 
-
-.above, .below {
+.selection, .top {
     position: relative; /* 絶対位置ではなく通常のフローで配置 */
     display: flex;
     justify-content: center; /* 横方向の中央揃え */
     align-items: center;
-    margin: 20px 0; /* 上下にマージンを設定 */
 }
 
+.debate{
+    font-size: 24px; /* ボタン内の文字サイズを大きく設定 */
+    padding: 30px 50% 20px 0%; /* ボタンの上下左右の余白を設定 */
+    background-color: #F27141; /* 背景色を設定 */
+    color: black; /* 文字色を白に設定 */
+    border: none; 
+    border-radius: 5px; /* 角を丸める */
+    cursor: pointer; /* マウスオーバー時にポインタを表示 */
+    font-family: "Zen Maru Gothic", serif;
+    width: 300px;
+    height:300px;
+    margin: 10px;
+}
+
+.reflect{
+    font-size: 24px; /* ボタン内の文字サイズを大きく設定 */
+    padding: 30px 10% 5px 0%; /* ボタンの上下左右の余白を設定 */
+    background-color: #F2D680; /* 背景色を設定 */
+    color: black; /* 文字色を白に設定 */
+    border: none; 
+    border-radius: 5px; /* 角を丸める */
+    cursor: pointer; /* マウスオーバー時にポインタを表示 */
+    font-family: "Zen Maru Gothic", serif;
+    width: 110px;
+    height:140px;
+    margin:10px;
+}
+
+.weak{
+    font-size: 24px; /* ボタン内の文字サイズを大きく設定 */
+    padding: 30px 20% 5px 0%; /* ボタンの上下左右の余白を設定 */
+    background-color:#2793F2; /* 背景色を設定 */
+    color: black; /* 文字色を白に設定 */
+    border: none; 
+    border-radius: 5px; /* 角を丸める */
+    cursor: pointer; /* マウスオーバー時にポインタを表示 */
+    font-family: "Zen Maru Gothic", serif;
+    width: 170px;
+    height:140px;
+    margin: 10px;
+}
+
+.syukatsu{
+    font-size: 24px; /* ボタン内の文字サイズを大きく設定 */
+    padding: 30px 50% 5px 0%; /* ボタンの上下左右の余白を設定 */
+    background-color:#D67298; /* 背景色を設定 */
+    color: black; /* 文字色を白に設定 */
+    border: none; 
+    border-radius: 5px; /* 角を丸める */
+    cursor: pointer; /* マウスオーバー時にポインタを表示 */
+    font-family: "Zen Maru Gothic", serif;
+    width: 300px;
+    height:140px;
+    margin: 10px;
+}
 
 
