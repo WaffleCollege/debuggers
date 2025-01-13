@@ -21,8 +21,10 @@
     cursor: pointer; 
 }
 
-.content{
-
+.title{
+    position: relative; 
+    display: flex;
+    justify-content: center;
 }
 
 h1{
@@ -30,6 +32,7 @@ h1{
     font-family: "Zen Maru Gothic", serif;
     font-size: 25.6px;
     margin-left: 10px;
+    width: 640px;
 }
 
 button[type="submit"]:hover {

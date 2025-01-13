@@ -25,31 +25,32 @@
                 <button type="submit" class="header-link">
                     <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
                 </button>
+            </div>
         </div>
     </header>
 
     <main>
-        <div class="content">
-            <h1>今日は何をしましょう？<h1>
-            <div class="selection">
-                <div class="left">
-                    <form action="{{ url_for('start_main') }}" method="GET">
-                        <button type="submit" class="debate">ディベート</button>
-                    </form>
+        <div class="title">
+            <h1>今日は何をしましょう？</h1>
+        </div>
+        <div class="selection">
+            <div class="left">
+                <form action="{{ url_for('start_main') }}" method="GET">
+                    <button type="submit" class="debate">ディベート</button>
+                </form>
+            </div>
+            <div class="right">
+                <div class="top">
+                    
+                        <button type="submit" class="reflect">記録</button>
+                    
+                        <button type="submit" class="weak">私の弱点</button>
+                    
                 </div>
-                <div class="right">
-                    <div class="top">
-                        
-                            <button type="submit" class="reflect">記録</button>
-                        
-                            <button type="submit" class="weak">私の弱点</button>
-                        
-                    </div>
-                    <div class="down">
-                        <form action="{{ url_for('start_job_mode') }}" method="GET">
-                            <button type="submit" class="syukatsu">就活モード<br>ディベート</button>
-                        </form>
-                    </div>
+                <div class="down">
+                    <form action="{{ url_for('start_job_mode') }}" method="GET">
+                        <button type="submit" class="syukatsu">就活モード<br>ディベート</button>
+                    </form>
                 </div>
             </div>
         </div>
