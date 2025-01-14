@@ -219,7 +219,7 @@ button:hover {
 
 /* テキストエリアのスタイル */
 #freeText {
-  width: 100%;
+  width: 50%;
   min-height: 150px;
   padding: 15px;
   border: 2px solid #ffa500;
