@@ -61,15 +61,16 @@
             {% endfor %}
         </div>
 
-
-        <!-- 入力フォーム -->
         <div class="chat-input">
             <form id="chat-form">
                 <textarea id="user-message" name="user_message" placeholder="意見を入力してください" required></textarea>
+                <!-- 送信ボタン -->
                 <button type="submit" class="btn">送信</button>
+                <!-- 次へ進むボタン -->
+                <button type="button" id="next-stage-button" class="btn">次へ進む</button>
             </form>
-            
         </div>
+     
 
         <div id="evaluation-button" style="display: none;">
             <form action="{{ url_for('debate.show_evaluation') }}" method="GET">
@@ -171,6 +172,56 @@ chatForm.addEventListener('submit', async (event) => {
                 if (evaluationButton) {
                     evaluationButton.style.display = "block"; // ボタンを表示
                 }
+            }
+        } else {
+            alert(data.error || "エラーが発生しました");
+        }
+    } catch (error) {
+        console.error("サーバーエラー:", error);
+        alert("サーバーエラーが発生しました");
+    }
+});
+
+
+const nextStageButton = document.getElementById('next-stage-button');
+
+// 「次へ進む」ボタンのクリックイベント
+nextStageButton.addEventListener('click', async () => {
+    try {
+        const response = await fetch('{{ url_for("debate.progress_debate") }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stage: currentStage })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // チャットボックスを更新
+            chatBox.innerHTML = '';
+            data.feedback.forEach(entry => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
+                const speakerIcon = entry.speaker === 'ユーザー' ? userIconUrl :
+                    entry.speaker === 'AI' ? aiIconUrl : hostIconUrl;
+
+                messageDiv.innerHTML = `
+                    <div class="speaker">
+                        <img src="${speakerIcon}" alt="${entry.speaker}">
+                    </div>
+                    <p class="message ${entry.speaker === 'ユーザー' ? 'right' : 'left'}">${entry.message}</p>
+                `;
+                chatBox.appendChild(messageDiv);
+            });
+
+            // ステージを更新
+            currentStage = getNextStage(currentStage);
+
+            // ステージが終了した場合
+            if (currentStage === 'end') {
+                nextStageButton.style.display = 'none'; // 次へ進むボタンを非表示
+                const evaluationButton = document.getElementById('evaluation-button');
+                if (evaluationButton) evaluationButton.style.display = 'block'; // 結果ボタンを表示
             }
         } else {
             alert(data.error || "エラーが発生しました");
