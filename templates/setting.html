@@ -15,27 +15,37 @@
 </head>
 <body>
     <header>
-        <!-- ホーム画面に戻るアイコン -->
-        <form action="{{ url_for('setting.home') }}" method="POST" class="button-form">
-            <button type="submit" class="header-link">
-                <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
-            </button>
-        </form>
-
-        <!-- 戻る アイコン -->
-        <form action="{{ url_for('setting.back') }}" method="POST" class="button-form">
-            <button type="submit" class="header-link">
-                <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
-            </button>
-        </form>
-        <h1>ディベート設定画面</h1>
+        <div class="header-buttons">
+            <div class="header-links-container">
+                <!-- ホーム画面に戻るアイコン -->
+                <form action="{{ url_for('setting.home') }}" method="POST" class="button-form">
+                <button type="submit" class="header-link">
+                    <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
+                </button>
+                </form>
+            
+                <!-- 戻る アイコン -->
+                <form action="{{ url_for('setting.back') }}" method="POST" class="button-form">
+                <button type="submit" class="header-link">
+                    <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
+                </button>
+                </form>
+            </div>
+        </div>
     </header>
+        
+
 
     <main>
+        <div class="title"><h1>ディベート設定画面</h1></div>
+        <div class="button-container">
+            
         <form id="settingForm" action="{{ url_for('setting.setting') }}" method="post">
             <!-- モード選択ボタン -->
             <div class="mode-buttons">
+                <div class="h3タグ">
                 <h3>難易度</h3>
+                </div>
                 {% for mode in modes %}
                     <button type="button" onclick="selectMode(this)" value="{{ mode }}" class="btn">{{ mode }}</button>
                 {% endfor %}
@@ -43,7 +53,9 @@
 
             <!-- カテゴリー選択ボタン -->
             <div class="category-buttons">
+                <div class="h3タグ">
                 <h3>カテゴリー</h3>
+                </div>
                 {% for category in categories %}
                     <button type="button" onclick="selectCategory(this)" value="{{ category }}" class="category-btn">{{ category }}</button>
                 {% endfor %}
@@ -62,9 +74,11 @@
 
             <!-- ポジション選択ボタン -->
             <div class="position_content">
+                <div class="h3タグ">
                 <h3>ポジション</h3>
-                <button type="button" onclick="selectPosition(this)" value="先攻">先攻（賛成）</button>
-                <button type="button" onclick="selectPosition(this)" value="後攻">後攻（反対）</button>
+                </div>
+                <button type="button" name="positionButton" onclick="selectPosition(this)" value="先攻">先攻（賛成）</button>
+                <button type="button" name="positionButton" onclick="selectPosition(this)" value="後攻">後攻（反対）</button>
             </div>
 
             <div class="debate_start_button">
@@ -77,12 +91,56 @@
             <input type="hidden" id="selectedTopic" name="topic" value="">
             <input type="hidden" id="selectedPosition" name="position" value="">
         </form>
+    </div>
     </main>
 
     <script>
-        const modal = document.getElementById('modal');
-        const btn = document.getElementById('modalButton');
-        const span = document.getElementsByClassName("close")[0];
+    document.addEventListener('DOMContentLoaded', function() {
+        const positionButtons = document.querySelectorAll('.position_content button');
+        const modeButtons = document.querySelectorAll('.mode-buttons button');
+        const categoryButtons = document.querySelectorAll('.category-buttons button');
+
+    function toggleButtonSelection(buttons, clickedButton) {
+        buttons.forEach(button => {
+            if (button === clickedButton) {
+                button.classList.add('clicked');
+            } else {
+                button.classList.remove('clicked');
+            }
+        });
+    }
+
+    positionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            toggleButtonSelection(positionButtons, this);
+            document.getElementById('selectedPosition').value = this.value;
+        });
+    });
+
+    modeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            toggleButtonSelection(modeButtons, this);
+            document.getElementById('selectedMode').value = this.value;
+        });
+    });
+
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.id !== 'modalButton') {
+                toggleButtonSelection(categoryButtons, this);
+                document.getElementById('selectedCategory').value = this.value;
+            }
+        });
+    });
+
+    // 既存のモーダル関連のコードはそのまま維持
+});
+
+
+
+// 既存の他の関数（selectMode, selectCategory, selectPosition, clearSelection）は削除可能です
+
+        
 
         btn.onclick = function() {
             modal.style.display = 'block';
@@ -97,6 +155,9 @@
                 modal.style.display = 'none';
             }
         };
+
+       
+
 
         function selectMode(button) {
             clearSelection('.mode-buttons button');

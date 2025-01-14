@@ -1,106 +1,192 @@
-body {
-  background-color: #fffaf9;
-  font-family: 'Zen kaku gothic new';
-  margin: 0;
-  padding: 0;
-  position: relative;
 
+/* 横並びアイコン用のコンテナ */
+.header-links-container {
+  display: flex;/*小要素を横並びに*/
+  align-items: center;  /* 子要素を垂直方向の中央に揃える */
+  justify-content: flex-start; /* 左揃え */
+
+  position: absolute; 
+  top: 20px; /* 上端に配置 */
+  left: 10px; /* 左端に配置 */
+  z-index: 10; /* 他の要素よりも前面に表示 */
 }
 
-/*headerの戻るボタン、ホームボタン*/
-header {
-  position: fixed;
+.header-icon {
+  width: 50px; /* アイコンのサイズ */
+  height: 50px;
+}
+
+.header-link{
   background-color: #fffaf9;
-  height: 80px; 
-  width: 100%;
-  top: 0;
-  left: 50%; /* 中央に配置 */
-  transform: translateX(-50%); /* 中央揃えにする */
-  z-index: 1000;
+  border: none;  /* ボタンの枠線を消す */
+  cursor: pointer; 
+}
+
+.title{
+  position: relative; 
   display: flex;
-  justify-content: center; /* 中央揃え */
-  align-items: center; /* 垂直方向に中央揃え */
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
+  justify-content: center;
 }
 
-main{
-  padding-top:80px ;
+h1{
+  color: black;
+  font-family: "Zen Maru Gothic", serif;
+  font-size: 25.6px;
+  margin-left: 10px;
+  width: 640px;
 }
 
-h3{
-  margin-top: 100px;
-  margin-left: 20px;
-}
-textarea[name="free_text"] {
-  margin-left: 40%;
-  width: 180px;
-  height: 120px; /* 高さを大きく設定 */
-  font-size: 18px; /* フォントサイズを大きく設定 */
-  padding: 10px; /* 内側の余白を設定 */
-  border: 2px solid #ccc; /* 境界線を太く設定 */
-  border-radius: 5%; /* 角を丸める */
-  resize: none; /* サイズ変更を無効化 */
-}
+@media (max-width: 768px) {
+  .header-container {
+      flex-direction: column;
+      align-items: flex-start;
+  }
 
-
-/*ボタン*/
-
-
-.btn {
-
-  display: inline-block; /* ボタンをインライン要素に */
-  padding: 10px  12px; /* ボタン内のスペース */
-  font-size: 1epx; /* フォントサイズ */
-  font-weight: bold; /* 太字 */
-  color: #fff; /* 文字色 */
-  background-color: #12627d; /* 背景色 */
-  border: 2px solid #12627d; /* 枠線 */
-  border-radius: 5px; /* 丸みを持たせる */
-  text-align: center; /* 文字を中央に */
-  text-decoration: none; /* テキストの下線をなくす */
-  transition: all 0.3s ease; /* ホバー時のトランジション */
-  /*もう一度押したら色が戻る*/
+  .title {
+      position: static;
+      transform: none;
+      margin-top: 10px;
+      text-align: center;
+      width: 100%;
+  }
 }
 
 
-/*モード選択content*/
-.mode-buttons{
-  background-color: #f0f0f0;
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* コンテンツの最大幅を設定 */
+  margin: 0 auto; /* 中央揃え */
+  padding: 20px;
 }
 
-.mode-buttons .btn {
-  /* 例: ボタンのスタイルを追加 */
+.mode-buttons,
+.category-buttons,
+.position_content,
+.debate_start_button {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.h3タグ {
+  margin-bottom: 15px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+button {
+  min-width: 120px;
   padding: 10px 15px;
-  margin: 5px;
-  background-color: #e15151;
+  font-size: 16px;
+  white-space: nowrap;
+  border-radius: 10px; /* 角を丸める */
 }
 
-/* ボタンのホバー時のスタイル */
-.btn:hover {
-  background-color: #0396A6; /* ホバー時の背景色 */
-  color: #fff; /* ホバー時の文字色 */
-  border-color: #0396A6; /* ホバー時の枠線色 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* シャドウを追加 */
-  transform: translateY(-2px); /* ボタンが少し浮き上がる */
-}
+@media (max-width: 768px) {
+  .button {
+      flex-direction: column;
+      align-items: center;
+  }
 
-/* ボタンがアクティブ（クリック時） */
-.btn:active {
-  background-color: #0396A6; /* クリック時の背景色 */
-  border-color: #0396A6; /* クリック時の枠線色 */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* クリック時のシャドウ */
-  transform: translateY(0); /* クリック時に浮き上がり効果をなくす */
+  button {
+      width: 100%;
+      max-width: 300px;
+  }
 }
 
 
-/*カテゴリー選択content*/
 
-/*ポジションcontent*/
+/* モード選択ボタン */
+.mode-buttons button {
+  background-color: #fff;
+  color: black;
+  width: 100px;
+  cursor: pointer; /* マウスオーバー時にポインタを表示 */
+  border: 1px solid #ffa500
+}
+
+/* カテゴリー選択ボタン */
+.category-buttons button {
+  background-color: #fff;
+  color: black;
+  width: 100px;
+  cursor: pointer; /* マウスオーバー時にポインタを表示 */
+  border: 1px solid #ffa500
+}
 
 
-/*ディベートスタートボタン*/
+/* ポジション選択ボタン */
+.position_content button {
+  background-color: #fff;
+  color: black;
+  width: 100px;
+  cursor: pointer; /* マウスオーバー時にポインタを表示 */
+  border: 1px solid #ffa500
+}
+.position_content button.clicked {
+  background-color: #ffa500; /* クリック時の色 */
+}
+
+.mode-buttons button.clicked,
+.category-buttons button.clicked {
+    background-color: #ffa500; /* クリック時の色 */
+}
+
+
+/* ディベートスタートボタン */
+.debate_start_button button {
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 18px;
+  padding: 15px 30px;
+  width: 70%; /* 親要素の幅の50% */
+  cursor: pointer; /* マウスオーバー時にポインタを表示 */
+  border: 2px solid transparent; /* 透明な枠線を追加 */
+  transition: border-color 0.3s ease; /* 枠線の色変化をスムーズに */
+}
+
+
+/* ボタン間のマージン調整 */
+.mode-buttons button,
+.category-buttons button,
+.position_content button {
+  margin-left: 10px; /* ボタン間のマージンを10pxに設定 */
+}
+
+/* 選択されたボタン */
+.selected {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+/* ホバー時のスタイル */
+button:hover {
+  background-color: darken($button-color, 10%); /* ボタンの色を少し暗く */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* モーダル */
+/* ... (既存のモーダルのスタイルはそのまま) */
+
+/* モーダルのボタン */
+.modal-content button {
+  /* ボタンのスタイルを継承 */
+  background-color: #4CAF50;
+  /* ... */
+}
 
 
 
