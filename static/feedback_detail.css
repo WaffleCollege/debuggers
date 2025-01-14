@@ -1,6 +1,6 @@
 /* ベーススタイル */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Zen Maru Gothic", serif;
     background-color: #fef8f8;
     color: #333;
     margin: 0;
@@ -70,12 +70,14 @@ body {
     font-size: 16px;
     line-height: 1.6;
     color: #333;
+    font-family: "Zen Maru Gothic", serif;
 }
 
 /* ディベート終了ボタン */
 .end-button {
     padding: 10px 20px;
     font-size: 16px;
+    font-family: "Zen Maru Gothic", serif;
     font-weight: bold;
     background-color: #f27141;
     color: #fff;

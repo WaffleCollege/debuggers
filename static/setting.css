@@ -90,6 +90,7 @@ button {
   min-width: 120px;
   padding: 10px 15px;
   font-size: 16px;
+  font-family: "Zen Maru Gothic", serif;
   white-space: nowrap;
   border-radius: 10px; /* 角を丸める */
 }
@@ -150,6 +151,7 @@ button {
   background-color: #ff9800;
   color: #fff;
   font-size: 18px;
+  font-family: "Zen Maru Gothic", serif;
   padding: 15px 30px;
   width: 70%; /* 親要素の幅の50% */
   cursor: pointer; /* マウスオーバー時にポインタを表示 */

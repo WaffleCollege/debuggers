@@ -1,6 +1,6 @@
 /* ベーススタイル */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Zen Maru Gothic", serif;
     background-color: #fef8f8;
     color: #333;
     margin: 0;
@@ -54,6 +54,7 @@ body {
     font-size: 24px;
     margin-bottom: 10px;
     color: #333;
+    font-family: "Zen Maru Gothic", serif;
 }
 
 .main-content .result {
@@ -61,17 +62,20 @@ body {
     font-weight: bold;
     color: #f27141;
     margin: 20px 0;
+    font-family: "Zen Maru Gothic", serif;
 }
 
 .main-content p {
     font-size: 16px;
     margin: 10px 0;
+    font-family: "Zen Maru Gothic", serif;
 }
 
 .arrow {
     font-size: 24px;
     color: #ffcc00;
     margin: 20px 0;
+    font-family: "Zen Maru Gothic", serif;
 }
 
 /* 勝者アイコン */
@@ -107,6 +111,7 @@ body {
 .feedback-button {
     padding: 10px 20px;
     font-size: 16px;
+    font-family: "Zen Maru Gothic", serif;
     font-weight: bold;
     border: none;
     border-radius: 5px;
