@@ -7,10 +7,10 @@ import logging
 
 feedback_bp = Blueprint('feedback', __name__)
 
-
 # OpenAI APIキーとモデル名を設定
 openai.organization = '' # ここに組織IDを設定
 openai.api_key = ''
+
 
 
 
@@ -115,7 +115,6 @@ def evaluate_debate():
 
    
    """
-   
 
 
 
@@ -168,6 +167,7 @@ def evaluate_debate():
 
 
 
+       
 
 @feedback_bp.route('/feedback', methods=['POST'])
 def feedback_page():
