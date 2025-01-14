@@ -12,28 +12,23 @@
 </head>
 <body>
     <header>
-
-    <div class="header-buttons">
-        <div class="header-links-container">
-<!-- ホーム画面に戻るアイコン -->
-<form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
-    <button type="submit" class="header-link">
-        <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
-    </button>
-</form>
-
-<!-- 戻る アイコン -->
-<form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
-    <button type="submit" class="header-link">
-        <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
-    </button>
-</form>
-</div>
-        <!-- 中断ボタン -->
-                <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
-                    <button type="submit" class="interrupt">中断</button>
+        <div class="header-buttons">
+            <div class="header-links-container">
+                <form action="{{ url_for('debate.home_debate') }}" method="POST" class="button-form">
+                    <button type="submit" class="header-link">
+                        <img src="{{ url_for('static', filename='images/home_icon.png') }}" alt="Home アイコン" class="header-icon">
+                    </button>
+                </form>
+                <form action="{{ url_for('debate.back_debate') }}" method="POST" class="button-form">
+                    <button type="submit" class="header-link">
+                        <img src="{{ url_for('static', filename='images/back_icon.png') }}" alt="戻る アイコン" class="header-icon">
+                    </button>
                 </form>
             </div>
+            <form action="{{ url_for('debate.stop_debate') }}" method="POST" class="button-form">
+                <button type="submit" class="interrupt">中断</button>
+            </form>
+        </div>
     </header>
 
     <main>
@@ -44,10 +39,9 @@
 
         <!-- チャット履歴 -->
         <div id="chat-box" class="debate-dialog">
-                {% for message in feedback %}
+            {% for message in feedback %}
                 <div class="chat-entry {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
                     <div class="speaker {{ 'right' if message.speaker == 'ユーザー' else 'left' }}">
-                        <!-- スピーカーがユーザー、AI、司会者それぞれで異なる画像を設定 -->
                         {% if message.speaker == 'ユーザー' %}
                             <img src="{{ url_for('static', filename='images/user_icon.JPG') }}" alt="ユーザー アイコン">
                         {% elif message.speaker == 'AI' %}
@@ -61,16 +55,21 @@
             {% endfor %}
         </div>
 
+        <!-- 入力フィールドと送信ボタン -->
         <div class="chat-input">
-            <form id="chat-form">
+            <form id="chat-form" style="display: none;">
                 <textarea id="user-message" name="user_message" placeholder="意見を入力してください" required></textarea>
-                <!-- 送信ボタン -->
                 <button type="submit" class="btn">送信</button>
-                <!-- 次へ進むボタン -->
-                <button type="button" id="next-stage-button" class="btn">次へ進む</button>
             </form>
         </div>
-     
+
+        <!-- AI生成中メッセージ -->
+        <p id="loading-message" style="display: none;">「次へ進む」を押してお待ちください。AIが回答を生成中です...</p>
+
+        <!-- 次へ進むボタン -->
+        <div id="next-stage-container">
+            <button id="next-stage-button" class="btn" style="display: none;">次へ進む</button>
+        </div>
 
         <div id="evaluation-button" style="display: none;">
             <form action="{{ url_for('debate.show_evaluation') }}" method="GET">
@@ -78,20 +77,15 @@
             </form>
         </div>
     </main>
-
     <script>
-        const userIconUrl = "{{ url_for('static', filename='images/user_icon.JPG') }}";
-        const aiIconUrl = "{{ url_for('static', filename='images/ai_icon.JPG') }}";
-        const hostIconUrl = "{{ url_for('static', filename='images/host_icon.JPG') }}";
-
         const chatBox = document.getElementById('chat-box');
         const chatForm = document.getElementById('chat-form');
+        const nextStageButton = document.getElementById('next-stage-button');
+        const loadingMessage = document.getElementById('loading-message');
+        const evaluationButton = document.getElementById('evaluation-button');
         const userMessageInput = document.getElementById('user-message');
-
-        // ステージを管理
         let currentStage = "start";
-
-        // ステージの順序を管理
+    
         function getNextStage(current) {
             const stages = [
                 "start",
@@ -103,108 +97,35 @@
                 "final_user_2",
                 "end"
             ];
-
             const currentIndex = stages.indexOf(current);
             return currentIndex !== -1 && currentIndex < stages.length - 1
                 ? stages[currentIndex + 1]
                 : "end";
         }
-
-       // チャット送信処理
-chatForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // フォームのリロードを防止
-    const userMessage = userMessageInput.value.trim();
-
-    if (!userMessage && currentStage !== "start") {
-        alert("メッセージを入力してください");
-        return;
-    }
-
-    try {
-        // サーバーにメッセージと現在のステージを送信
-        const response = await fetch('{{ url_for("debate.progress_debate") }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: userMessage,
-                stage: currentStage
-            }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // チャットボックスを更新
-            chatBox.innerHTML = '';
-            data.feedback.forEach(entry => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
-                // スピーカーに応じたアイコンを設定
-                let speakerIcon = '';
-                if (entry.speaker === 'ユーザー') {
-                    speakerIcon = `<img src="${userIconUrl}" alt="ユーザー アイコン">`;
-                } else if (entry.speaker === 'AI') {
-                    speakerIcon = `<img src="${aiIconUrl}" alt="AI アイコン">`;
-                } else {
-                    speakerIcon = `<img src="${hostIconUrl}" alt="司会者 アイコン">`;
-                        }
-             // messageDiv.innerHTML に画像とメッセージを組み合わせる
-             messageDiv.innerHTML = `
-                    <div class="speaker">${speakerIcon}</div>
-                    <p class="message ${entry.speaker === 'ユーザー' ? 'right' : 'left'}">${entry.message}</p>
-                `;
-                chatBox.appendChild(messageDiv);
+    
+        async function fetchStageUpdate(message = "") {
+            const response = await fetch('{{ url_for("debate.progress_debate") }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stage: currentStage, message }),
             });
-
-            // 次のステージに進む
-            currentStage = getNextStage(currentStage);
-
-            // 入力フィールドをリセット
-            if (currentStage !== "start") {
-                userMessageInput.value = '';
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || "エラーが発生しました");
             }
-
-            // ステージが "end" になった場合、評価画面へのボタンを表示
-            if (currentStage === "end") {
-                const evaluationButton = document.getElementById("evaluation-button");
-                if (evaluationButton) {
-                    evaluationButton.style.display = "block"; // ボタンを表示
-                }
-            }
-        } else {
-            alert(data.error || "エラーが発生しました");
+            return data;
         }
-    } catch (error) {
-        console.error("サーバーエラー:", error);
-        alert("サーバーエラーが発生しました");
-    }
-});
-
-
-const nextStageButton = document.getElementById('next-stage-button');
-
-// 「次へ進む」ボタンのクリックイベント
-nextStageButton.addEventListener('click', async () => {
-    try {
-        const response = await fetch('{{ url_for("debate.progress_debate") }}', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ stage: currentStage })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // チャットボックスを更新
+    
+        function updateUIForStage(stage, feedback) {
+            // チャットボックスの更新
             chatBox.innerHTML = '';
-            data.feedback.forEach(entry => {
+            feedback.forEach(entry => {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `chat-entry ${entry.speaker === 'ユーザー' ? 'right' : 'left'}`;
-                const speakerIcon = entry.speaker === 'ユーザー' ? userIconUrl :
-                    entry.speaker === 'AI' ? aiIconUrl : hostIconUrl;
-
+                const speakerIcon = entry.speaker === 'ユーザー' ? "{{ url_for('static', filename='images/user_icon.JPG') }}" :
+                                    entry.speaker === 'AI' ? "{{ url_for('static', filename='images/ai_icon.JPG') }}" :
+                                    "{{ url_for('static', filename='images/host_icon.JPG') }}";
+    
                 messageDiv.innerHTML = `
                     <div class="speaker">
                         <img src="${speakerIcon}" alt="${entry.speaker}">
@@ -213,59 +134,76 @@ nextStageButton.addEventListener('click', async () => {
                 `;
                 chatBox.appendChild(messageDiv);
             });
-
-            // ステージを更新
-            currentStage = getNextStage(currentStage);
-
-            // ステージが終了した場合
-            if (currentStage === 'end') {
-                nextStageButton.style.display = 'none'; // 次へ進むボタンを非表示
-                const evaluationButton = document.getElementById('evaluation-button');
-                if (evaluationButton) evaluationButton.style.display = 'block'; // 結果ボタンを表示
-            }
-        } else {
-            alert(data.error || "エラーが発生しました");
-        }
-    } catch (error) {
-        console.error("サーバーエラー:", error);
-        alert("サーバーエラーが発生しました");
-    }
-});
-
-    </script>
-</body>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const inputField = document.getElementById('user-message');
-    const timerDisplay = document.getElementById('time');
-    let timerStarted = false;
-    let timeLeft = 180; 
-    let intervalId;
-
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-    }
-
-    inputField.addEventListener('focus', function() {
-        if (!timerStarted) {
-            timerStarted = true;
-            timerDisplay.textContent = `残り時間: ${formatTime(timeLeft)}`;
-
-            intervalId = setInterval(function() {
-                timeLeft--;
-                timerDisplay.textContent = `残り時間: ${formatTime(timeLeft)}`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(intervalId);
-                    inputField.disabled = true;
-                    timerDisplay.textContent = '時間切れ';
-                }
-            }, 1000);
-        }
-    });
     
-});
-</script>
+            // UI表示の切り替え
+            const isUserTurn = 
+                (stage.startsWith('claim_user') && ((stage.endsWith('1') && "{{ debate.user_1 }}" === "ユーザー") || 
+                                                     (stage.endsWith('2') && "{{ debate.user_2 }}" === "ユーザー"))) ||
+                (stage.startsWith('counter_user') && ((stage.endsWith('1') && "{{ debate.user_1 }}" === "ユーザー") || 
+                                                       (stage.endsWith('2') && "{{ debate.user_2 }}" === "ユーザー"))) ||
+                (stage.startsWith('final_user') && ((stage.endsWith('1') && "{{ debate.user_1 }}" === "ユーザー") || 
+                                                     (stage.endsWith('2') && "{{ debate.user_2 }}" === "ユーザー")));
+    
+            if (stage === "start") {
+                // ステージが start の場合
+                loadingMessage.style.display = "none";
+                chatForm.style.display = "none";
+                nextStageButton.style.display = "inline-block";
+                evaluationButton.style.display = "none";
+            } else if (stage === "end") {
+                // ステージが end の場合
+                loadingMessage.style.display = "none";
+                chatForm.style.display = "none";
+                nextStageButton.style.display = "none";
+                evaluationButton.style.display = "block";
+            } else if (isUserTurn) {
+                // ユーザーターンの場合
+                chatForm.style.display = "block";
+                loadingMessage.style.display = "none";
+                nextStageButton.style.display = "none";
+                evaluationButton.style.display = "none";
+            } else {
+                // その他（AIターンやその他のステージ）
+                chatForm.style.display = "none";
+                loadingMessage.style.display = "block";
+                nextStageButton.style.display = "inline-block";
+                evaluationButton.style.display = "none";
+            }
+        }
+    
+        chatForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const userMessage = userMessageInput.value.trim();
+            if (!userMessage) {
+                alert("メッセージを入力してください");
+                return;
+            }
+            try {
+                const data = await fetchStageUpdate(userMessage);
+                   // 入力フィールドを空にする
+               userMessageInput.value = "";
+                currentStage = getNextStage(currentStage);
+                updateUIForStage(currentStage, data.feedback);
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    
+        nextStageButton.addEventListener('click', async () => {
+            try {
+                const data = await fetchStageUpdate();
+                currentStage = getNextStage(currentStage);
+                updateUIForStage(currentStage, data.feedback);
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUIForStage(currentStage, {{ feedback | safe }});
+        });
+    </script>
+    
+    
+</body>
 </html>

@@ -72,7 +72,12 @@ def progress_debate():
         feedback = json.loads(debate.feedback) if debate.feedback else []
 
         # ステージごとの処理
-        if stage == "claim_user_1":
+        if stage == "start":
+            feedback.append({"speaker": "司会", "message": generate_moderator_comment("claim_user_1", debate)})
+            
+
+        # ステージごとの処理
+        elif stage == "claim_user_1":
             if debate.user_1 == "AI":
                 response = generate_claim(debate.topic, "賛成")
                 feedback.append({"speaker": debate.user_1, "message": response})
@@ -82,6 +87,7 @@ def progress_debate():
                 debate.user_1_claim = user_message
 
             feedback.append({"speaker": "司会", "message": generate_moderator_comment("claim_user_2", debate)})
+    
 
         elif stage == "claim_user_2":
             if debate.user_2 == "AI":

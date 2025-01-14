@@ -1,8 +1,10 @@
 import openai
 
 # OpenAI APIキーとモデル名を設定
+# OpenAI APIキーとモデル名を設定
 openai.organization = '' # ここに組織IDを設定
 openai.api_key = ''
+
 
 
 
@@ -71,7 +73,7 @@ def generate_claim(topic, position):
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
-        max_tokens=400,
+        max_tokens=500,
         temperature=0.7,
     )
     return response['choices'][0]['message']['content'].strip()
@@ -107,7 +109,7 @@ def generate_counter(topic, user_claim, position):
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
-        max_tokens=400,
+        max_tokens=500,
         temperature=0.7,
     )
     return response['choices'][0]['message']['content'].strip()
@@ -142,7 +144,7 @@ def generate_final(topic, user_claim, user_counter, position):
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "system", "content": prompt}],
-        max_tokens=400,
+        max_tokens=500,
         temperature=0.7,
     )
     return response['choices'][0]['message']['content'].strip()
@@ -151,7 +153,9 @@ def generate_final(topic, user_claim, user_counter, position):
 #司会AI
 def generate_moderator_comment(stage, debate):
     if stage == "start":
-        return f"これから「{debate.topic}」のディベートを開始します。それでは、賛成側の{debate.user_1}さん主張を始めてください。時間制限は3分です。"
+        return f"これから「{debate.topic}」のディベートを開始します。"
+    elif stage == "claim_user_1":
+        return f"それでは、賛成側の{debate.user_1}さん主張を始めてください。時間制限は3分です。"
     elif stage == "claim_user_2":
         return f"続いて、反対側の{debate.user_2}さん、主張を始めてください。時間制限は3分です。"
     elif stage == "counter_user_1":
