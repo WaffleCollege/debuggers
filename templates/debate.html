@@ -204,6 +204,36 @@
         });
     </script>
     
-    
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const inputField = document.getElementById('user-message');
+    const timerDisplay = document.getElementById('time');
+    let timerStarted = false;
+    let timeLeft = 180; 
+    let intervalId;
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }
+    inputField.addEventListener('focus', function() {
+        if (!timerStarted) {
+            timerStarted = true;
+            timerDisplay.textContent = `残り時間: ${formatTime(timeLeft)}`;
+            intervalId = setInterval(function() {
+                timeLeft--;
+                timerDisplay.textContent = `残り時間: ${formatTime(timeLeft)}`;
+                if (timeLeft <= 0) {
+                    clearInterval(intervalId);
+                    inputField.disabled = true;
+                    timerDisplay.textContent = '時間切れ';
+                }
+            }, 1000);
+        }
+    });
+
+});
+</script>
 </body>
 </html>
