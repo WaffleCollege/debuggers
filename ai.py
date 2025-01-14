@@ -1,7 +1,6 @@
 import openai
 
 # OpenAI APIキーとモデル名を設定
-# OpenAI APIキーとモデル名を設定
 openai.organization = '' # ここに組織IDを設定
 openai.api_key = ''
 
@@ -153,7 +152,7 @@ def generate_final(topic, user_claim, user_counter, position):
 #司会AI
 def generate_moderator_comment(stage, debate):
     if stage == "start":
-        return f"これから「{debate.topic}」のディベートを開始します。"
+        return f"これから{debate.topic}のディベートを開始します。"
     elif stage == "claim_user_1":
         return f"それでは、賛成側の{debate.user_1}さん主張を始めてください。時間制限は3分です。"
     elif stage == "claim_user_2":
@@ -167,5 +166,5 @@ def generate_moderator_comment(stage, debate):
     elif stage == "final_user_2":
         return f"それでは、反対側の{debate.user_2}さん、これまでの議論を踏まえて、最終立論を始めてください。時間制限は3分です。"
     elif stage == "end":
-        return f"これで「{debate.topic}」のディベートは終了です。評価画面へ移動してください。"
+        return f"これで{debate.topic}のディベートは終了です。評価画面へ移動してください。"
 
