@@ -90,7 +90,6 @@ button {
   min-width: 120px;
   padding: 10px 15px;
   font-size: 16px;
-  font-family: "Zen Maru Gothic", serif;
   white-space: nowrap;
   border-radius: 10px; /* 角を丸める */
 }
@@ -151,7 +150,6 @@ button {
   background-color: #ff9800;
   color: #fff;
   font-size: 18px;
-  font-family: "Zen Maru Gothic", serif;
   padding: 15px 30px;
   width: 70%; /* 親要素の幅の50% */
   cursor: pointer; /* マウスオーバー時にポインタを表示 */
@@ -198,7 +196,7 @@ button:hover {
 /*カテゴリー選択*/ 
 /*モーダル画面*/
 .modal {
-  display: none !important;
+  display: none ;
   position: fixed;
   z-index: 9999;
   left: 0;
@@ -209,30 +207,77 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* モーダル全体のスタイル調整 */
 .modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
 }
 
+/* テキストエリアのスタイル */
+#freeText {
+  width: 100%;
+  min-height: 150px;
+  padding: 15px;
+  border: 2px solid #ffa500;
+  border-radius: 10px;
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-size: 16px;
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#freeText:focus {
+  outline: none;
+  border-color: #ff8c00;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.25);
+}
+
+/* モーダル内の見出し */
+.modal-content p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* 送信ボタンのスタイル */
+.modal-content button {
+  background-color: #ffa500;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+.modal-content button:hover {
+  background-color: #ff8c00;
+}
+
+/* 閉じるボタンのスタイル調整 */
 .close {
-  color: #888;
-  float: right;
+  color: #aaa;
   font-size: 28px;
   font-weight: bold;
-  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  transition: color 0.3s ease;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
+  color: #333;
   text-decoration: none;
   cursor: pointer;
 }
-
-/*モーダル画面のテキストエリア*/
 
 
 

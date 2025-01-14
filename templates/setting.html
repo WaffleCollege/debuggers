@@ -98,102 +98,73 @@
     </main>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const positionButtons = document.querySelectorAll('.position_content button');
-        const modeButtons = document.querySelectorAll('.mode-buttons button');
-        const categoryButtons = document.querySelectorAll('.category-buttons button');
-
-    function toggleButtonSelection(buttons, clickedButton) {
-        buttons.forEach(button => {
-            if (button === clickedButton) {
-                button.classList.add('clicked');
-            } else {
-                button.classList.remove('clicked');
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modal');
+            const modalButton = document.getElementById('modalButton');
+            const span = document.getElementsByClassName("close")[0];
+            const positionButtons = 
+        document.querySelectorAll('.position_content button');
+            const modeButtons = document.querySelectorAll('.mode-buttons button');
+            const categoryButtons = document.querySelectorAll('.category-buttons button');
+    
+        function toggleButtonSelection(buttons, clickedButton) {
+            buttons.forEach(button => {
+                if (button === clickedButton) {
+                    button.classList.add('clicked');
+                } else {
+                    button.classList.remove('clicked');
+                }
+            });
+        }
+    
+        positionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                toggleButtonSelection(positionButtons, this);
+                document.getElementById('selectedPosition').value = this.value;
+            });
         });
-    }
-
-    positionButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            toggleButtonSelection(positionButtons, this);
-            document.getElementById('selectedPosition').value = this.value;
+    
+        modeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                toggleButtonSelection(modeButtons, this);
+                document.getElementById('selectedMode').value = this.value;
+            });
         });
-    });
-
-    modeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            toggleButtonSelection(modeButtons, this);
-            document.getElementById('selectedMode').value = this.value;
+    
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.id !== 'modalButton') {
+                    toggleButtonSelection(categoryButtons, this);
+                    document.getElementById('selectedCategory').value = this.value;
+                }
+            });
         });
-    });
-
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (this.id !== 'modalButton') {
-                toggleButtonSelection(categoryButtons, this);
-                document.getElementById('selectedCategory').value = this.value;
-            }
-        });
-    });
-
-    // 既存のモーダル関連のコードはそのまま維持
-});
-
-
-
-// 既存の他の関数（selectMode, selectCategory, selectPosition, clearSelection）は削除可能です
-
-        
-
-        btn.onclick = function() {
+    
+        // モーダル関連の処理
+        modalButton.onclick = function() {
             modal.style.display = 'block';
         };
-
+    
         span.onclick = function() {
             modal.style.display = 'none';
         };
-
+    
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = 'none';
             }
         };
-
-       
-
-
-        function selectMode(button) {
-            clearSelection('.mode-buttons button');
-            button.classList.add('selected');
-            document.getElementById('selectedMode').value = button.value;
-        }
-
-        function selectCategory(button) {
-            clearSelection('.category-buttons button');
-            button.classList.add('selected');
-            document.getElementById('selectedCategory').value = button.value;
-            // 自由記述ボタンが押された場合、topicにも値を設定
-            if (button.value === "自由記述") {
-                document.getElementById('selectedTopic').value = document.getElementById('freeText').value;
-            }
-        }
-
-        function selectPosition(button) {
-            clearSelection('.position_content button');
-            button.classList.add('selected');
-            document.getElementById('selectedPosition').value = button.value;
-        }
-
-        function clearSelection(selector) {
-            document.querySelectorAll(selector).forEach(btn => btn.classList.remove('selected'));
-        }
-
+        });
+    
         function saveTopic() {
             const topic = document.getElementById('freeText').value;
             document.getElementById('selectedTopic').value = topic;
-            modal.style.display = 'none';
+            document.getElementById('selectedCategory').value = '自由記述';
+            document.getElementById('modal').style.display = 'none';
             alert("テーマが設定されました: " + topic);
         }
-    </script>
-</body>
-</html>
+    
+        </script>
+    </body>
+    </html>
+    
