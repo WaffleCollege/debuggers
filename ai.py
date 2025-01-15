@@ -1,8 +1,6 @@
 import openai
 
-# OpenAI APIキーとモデル名を設定
-openai.organization = '' # ここに組織IDを設定
-openai.api_key = ''
+
 
 
 
@@ -10,6 +8,9 @@ openai.api_key = ''
 
 # OpenAI APIを使用してテーマを生成する関数
 def generate_theme(category):
+    # OpenAI APIキーとモデル名を設定
+    openai.organization = '' # ここに組織IDを設定
+    openai.api_key = ''
     prompt = f"あなたはディベートテーマを生成するAIです。{category}に関連する、賛成と反対が対立する30文字以内の議題を1つ作成し、議題のみを答えてください。"
     response = openai.ChatCompletion.create(
         model="gpt-4o-mini-2024-07-18",
