@@ -78,6 +78,10 @@
         </div>
     </main>
     <script>
+        var debateTimerId;
+        const debateTimerDisplay = document.getElementById('time');
+        let debateTimerStarted = false;
+        let debateTimeLeft = 180;
         const chatBox = document.getElementById('chat-box');
         const chatForm = document.getElementById('chat-form');
         const nextStageButton = document.getElementById('next-stage-button');
@@ -173,6 +177,8 @@
     
         chatForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            clearInterval(debateTimerId)
+            debateTimerDisplay.textContent = `残り時間: 03:00`;
             const userMessage = userMessageInput.value.trim();
             if (!userMessage) {
                 alert("メッセージを入力してください");
@@ -190,6 +196,8 @@
         });
     
         nextStageButton.addEventListener('click', async () => {
+            debateTimerStarted = false;
+            debateTimeLeft = 180;
             try {
                 const data = await fetchStageUpdate();
                 currentStage = getNextStage(currentStage);
@@ -207,32 +215,32 @@
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const inputField = document.getElementById('user-message');
-    const timerDisplay = document.getElementById('time');
-    let timerStarted = false;
-    let timeLeft = 180; 
-    let intervalId;
+    const debateInputField = document.getElementById('user-message'); 
+
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     }
-    inputField.addEventListener('focus', function() {
-        if (!timerStarted) {
-            timerStarted = true;
-            timerDisplay.textContent = `残り時間: ${formatTime(timeLeft)}`;
-            intervalId = setInterval(function() {
-                timeLeft--;
-                timerDisplay.textContent = `残り時間: ${formatTime(timeLeft)}`;
-                if (timeLeft <= 0) {
-                    clearInterval(intervalId);
-                    inputField.disabled = true;
-                    timerDisplay.textContent = '時間切れ';
+
+    debateInputField.addEventListener('focus', function() {
+        if (!debateTimerStarted) {
+            debateTimerStarted = true;
+            debateTimerDisplay.textContent = `残り時間: ${formatTime(debateTimeLeft)}`;
+
+            debateTimerId = setInterval(function() {
+                debateTimeLeft--;
+                debateTimerDisplay.textContent = `残り時間: ${formatTime(debateTimeLeft)}`;
+
+                if (debateTimeLeft <= 0) {
+                    clearInterval(debateTimerId);
+                    debateInputField.disabled = true;
+                    debateTimerDisplay.textContent = '時間切れ';
                 }
             }, 1000);
         }
     });
-
+    
 });
 </script>
 </body>
