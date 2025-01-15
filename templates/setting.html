@@ -97,6 +97,23 @@
     </div>
     </main>
 
+    <footer>
+        <div class="footermenu">
+            <a href="home.html">
+        <span class="icon"><img src="{{ url_for('static', filename='images/home2.icon.png') }}" alt="Home アイコン" class="header-icon"></span>
+              ホーム
+            </a>
+            <a href="debate.html">
+        <span class="icon"><img src="{{ url_for('static', filename='images/chatting.png') }}" alt="Home アイコン" class="header-icon"></span>
+              ディベート
+            </a>
+            <a href="services.html">
+        <span class="icon"><img src="{{ url_for('static', filename='images/setting_icon.png') }}" alt="Home アイコン" class="header-icon"></span>
+              設定
+            </a>
+          </div>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('modal');

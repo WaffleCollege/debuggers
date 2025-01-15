@@ -178,6 +178,56 @@ button:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* フッターの全体スタイル */
+.footermenu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: red; /* フッターの背景色 */
+}
+
+    /* 各リンク（ボタン）のスタイル */
+    .footermenu a {
+      flex: 1;
+      padding: 10px;
+      color: rgb(0, 0, 0);
+      text-align: center;
+      background-color: #e3f7cd;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+    }
+/* アイコンをクリアに表示 */
+.footermenu a .icon {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 5px;
+  /* 画像の品質を維持 */
+  image-rendering: pixelated; /* ピクセルアート風の表現に */
+  /* 背景色を透過させる */
+  background-color: transparent;
+}
+
+    /* ホバー時のスタイル */
+    .footermenu a:hover {
+      background-color: #45a049;
+    }
+
+    /* メディアクエリでのレスポンシブデザイン */
+@media (max-width: 600px) {
+  .footermenu a {
+    font-size: 14px; /* フォントサイズを小さく設定 */
+  }
+
+  .footermenu a .icon {
+    font-size: 20px; /* アイコンのフォントサイズを小さく設定 */
+  }
+}
+
+
 /* モーダル */
 /* ... (既存のモーダルのスタイルはそのまま) */
 
