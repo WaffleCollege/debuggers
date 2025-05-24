@@ -1,4 +1,4 @@
-# **🗣️Debuggers📖**
+# **🗣️ディベートマスター📖**
 waffle college 卒業ハッカソン　🏆Progate賞受賞
 > waffle collegeでの学びの集大成として、初めて作ったwebアプリです！！
 ## プロジェクト概要
